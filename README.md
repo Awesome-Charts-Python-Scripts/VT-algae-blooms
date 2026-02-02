@@ -1,6 +1,20 @@
 # VT-algae-blooms
 CS 5540 class project to use machine learning techniques to predict algae blooms in Vermont
 
+## Setup
+```bash
+# install uv
+pip install uv
+
+# Activate the virtual environment
+# Note that you must be at the project root directory
+source .venv/bin/activate
+
+# Install project packages into the virtual environment
+uv sync
+```
+
+
 ### Team
 
 Charlie Davidson  
@@ -34,4 +48,3 @@ We will develop a machine learning model that will predict algae blooms in selec
 - Fine-tune the model(s)
   - Evaluate on test set
 - Write project report & presentation
-

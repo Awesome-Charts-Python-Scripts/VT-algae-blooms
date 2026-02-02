@@ -1,0 +1,19 @@
+[project]
+name = "vt-algae-blooms"
+version = "0.1.0"
+description = "CS5540 class project to use machine learning techniques to predict algae blooms in Vermont"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [
+    {name = "Josh Fishbein", email = "joshua.fishbein@uvm.edu"},
+    {name = "Helen Flannery", email = "helen.flannery@uvm.edu"},
+    {name = "Charlie Davidson", email = "charles.s.davidson@uvm.edu"},
+    {name = "Alex Schaefer", email = "alexander.schaefer@uvm.edu"},
+]
+dependencies = [
+    "black",
+    "pandas",
+    "lxml",
+    "html5lib",
+    "beautifulsoup4",
+]
