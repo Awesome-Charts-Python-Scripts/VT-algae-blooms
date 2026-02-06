@@ -59,5 +59,9 @@ The majority of the features we plan to use in our model will come from other da
 
 - The NOAA National Centers for Environmental Information (NOAA NCEI). This data set includes features for air temperature, cloud cover, daylight hours (sunrise/sunset to align with cloud cover), precipitation, wind speed, and wind direction. We will be using the Burlington (BTV) airport station code (USW00014742). (https://www.ncei.noaa.gov/cdo-web/)
 
-We used the Vermont Department of Environmental Conservation's Long Term Monitoring Lakes Project documentation to map DEC monitoring stations to the algae blooms data. That data can be found at: https://anrweb.vermont.gov/DEC/_DEC/LongTermMonitoringLakes.aspx
+We used the Vermont Department of Environmental Conservation's Long Term Monitoring Lakes Project documentation to map DEC monitoring stations to the VCT algae blooms data. That data can be found at https://anrweb.vermont.gov/DEC/_DEC/LongTermMonitoringLakes.aspx. The formula we used to convert the decimal minutes latitude/longitude format in the DEC's data to the decimal degrees format in the VCT data is below.
+
+```
+decimal degrees = degrees + (minutes / 60)
+```
 
