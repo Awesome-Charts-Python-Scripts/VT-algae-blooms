@@ -48,3 +48,16 @@ We will develop a machine learning model that will predict algae blooms in selec
 - Fine-tune the model(s)
   - Evaluate on test set
 - Write project report & presentation
+
+### Data
+
+The majority of the features we plan to use in our model will come from other data sources, including: 
+
+- The Department of Environmental Conservation at the Vermont Agency of Natural Resources (DEC). This data set includes features for levels of different elements, many of which signal the presence of agricultural or municipal runoff (nitrogen, phosphorus, carbon, oxygen); pH; cyanobacteria quantities; water temperature; and water opacity. (https://anrweb.vermont.gov/dec/_dec/LongTermMonitoringLakes.aspx?_gl=1*1h6x1l7*_ga*MTc2NDE4MDg1Ny4xNzY4MTg0Nzc2*_ga_V9WQH77KLW*czE3Njk5MTU3MTMkbzQkZzEkdDE3Njk5MTYwMzkkajYwJGwwJGgw)
+
+- The U.S. Geological Service National Water Information System (USGS NWIS). This data set includes features for water temperature, water surface level, and site depth. (https://www.usgs.gov/tools/national-water-information-system-nwis-mapper)
+
+- The NOAA National Centers for Environmental Information (NOAA NCEI). This data set includes features for air temperature, cloud cover, daylight hours (sunrise/sunset to align with cloud cover), precipitation, wind speed, and wind direction. We will be using the Burlington (BTV) airport station code (USW00014742). (https://www.ncei.noaa.gov/cdo-web/)
+
+We used the Vermont Department of Environmental Conservation's Long Term Monitoring Lakes Project documentation to map DEC monitoring stations to the algae blooms data. That data can be found at: https://anrweb.vermont.gov/DEC/_DEC/LongTermMonitoringLakes.aspx
+
