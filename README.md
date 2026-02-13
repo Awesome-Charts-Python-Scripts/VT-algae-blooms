@@ -61,7 +61,23 @@ The majority of the features we plan to use in our model will come from other da
 
 We used the Vermont Department of Environmental Conservation's Long Term Monitoring Lakes Project documentation to map DEC monitoring stations to the VCT algae blooms data. That data can be found at https://anrweb.vermont.gov/DEC/_DEC/LongTermMonitoringLakes.aspx. The formula we used to convert the decimal minutes latitude/longitude format in the DEC's data to the decimal degrees format in the VCT data is below.
 
-```
-decimal degrees = degrees + (minutes / 60)
-```
 
+### Methods
+
+1. Data was downloaded from the links in the Data section, saved as zipfiles and loaded into the
+   `data/raw_files directory`
+2. The raw files were aggregated into unified csvs using the following:
+```shell
+python scripts/combine_dec_yearly_reports.py \
+    -i data/raw_files/vt_dec_yearly_reports.zip \
+    -o data/unified_csvs/vt_dec.csv
+
+python scripts/combine_vct_yearly_reports.py \
+    -i data/raw_files/vct_yearly_reports.zip \
+    -o data/unified_csvs/vct.csv
+```
+3. The unified csv files were converted into usable features using the following:
+```shell
+python scripts/create_dec_features.py \
+    -o data/unified_csvs/vt_dec_unified_prepped.csv
+```
