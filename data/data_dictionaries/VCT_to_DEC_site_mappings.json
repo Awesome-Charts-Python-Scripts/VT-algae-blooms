@@ -1,0 +1,9 @@
+[
+  {"VCT site": "Missisquoi Bay", "DEC sites": ["Missisquoi Bay", "Missisquoi Bay Central"]},
+  {"VCT site": "St. Albans Bay", "DEC sites": ["St. Albans Bay"]},
+  {"VCT site": "Inland Sea", "DEC sites": []},
+  {"VCT site": "Malletts Bay", "DEC sites": ["Malletts Bay"]},
+  {"VCT site": "Main Lake Central", "DEC sites": ["Main Lake", "Burlington Bay"]},
+  {"VCT site": "Main Lake North", "DEC sites": []},
+  {"VCT site": "Main Lake South", "DEC sites": ["Port Henry Segment"]}
+]

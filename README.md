@@ -51,7 +51,11 @@ We will develop a machine learning model that will predict algae blooms in selec
 
 ### Data
 
-The majority of the features we plan to use in our model will come from other data sources, including: 
+The target data comes from the VT Department of Health [Cyanobacteria (Blue-Green Algae) Tracker](https://anrweb.vermont.gov/vct/vct/LongTermMonitoringLakes.aspx)
+
+The features used in our model come from the following data sources
+
+- The VT Department of Health [Cyanobacteria (Blue-Green Algae) Tracker](https://anrweb.vermont.gov/vct/vct/LongTermMonitoringLakes.aspx). This data includes features for cyanobacteria taxa observed at different sites
 
 - The Department of Environmental Conservation at the Vermont Agency of Natural Resources (DEC). This data set includes features for levels of different elements, many of which signal the presence of agricultural or municipal runoff (nitrogen, phosphorus, carbon, oxygen); pH; cyanobacteria quantities; water temperature; and water opacity. (https://anrweb.vermont.gov/dec/_dec/LongTermMonitoringLakes.aspx?_gl=1*1h6x1l7*_ga*MTc2NDE4MDg1Ny4xNzY4MTg0Nzc2*_ga_V9WQH77KLW*czE3Njk5MTU3MTMkbzQkZzEkdDE3Njk5MTYwMzkkajYwJGwwJGgw)
 
@@ -59,9 +63,28 @@ The majority of the features we plan to use in our model will come from other da
 
 - The NOAA National Centers for Environmental Information (NOAA NCEI). This data set includes features for air temperature, cloud cover, daylight hours (sunrise/sunset to align with cloud cover), precipitation, wind speed, and wind direction. We will be using the Burlington (BTV) airport station code (USW00014742). (https://www.ncei.noaa.gov/cdo-web/)
 
-We used the Vermont Department of Environmental Conservation's Long Term Monitoring Lakes Project documentation to map DEC monitoring stations to the VCT algae blooms data. That data can be found at https://anrweb.vermont.gov/DEC/_DEC/LongTermMonitoringLakes.aspx. The formula we used to convert the decimal minutes latitude/longitude format in the DEC's data to the decimal degrees format in the VCT data is below.
+During exploratory data analysis, the following sources were used:
 
-```
-decimal degrees = degrees + (minutes / 60)
-```
+- We used the Vermont Department of Environmental Conservation's Long Term Monitoring Lakes Project documentation to map DEC monitoring stations to the VCT algae blooms data. That data can be found at https://anrweb.vermont.gov/DEC/_DEC/LongTermMonitoringLakes.aspx. The formula we used to convert the decimal minutes latitude/longitude format in the DEC's data to the decimal degrees format in the VCT data is below.
 
+- We used Lake Champlain shapefiles from [vermont.gov](https://geodata.vermont.gov/datasets/vt-lake-champlain-extracted-from-vhdcarto-polygon/about) to visualize monitoring site locations to map the VT Deparment of Health lake monitoring stations to the most relevant VT Department of Environmental Conservation lake monitoring stations
+
+### Methods
+
+1. Data was downloaded from the links in the Data section, saved as zipfiles and loaded into the
+   `data/raw_files directory`
+2. The raw files were aggregated into unified csvs using the following:
+```shell
+python scripts/combine_dec_yearly_reports.py \
+    -i data/raw_files/vt_dec_yearly_reports.zip \
+    -o data/unified_csvs/vt_dec.csv
+
+python scripts/combine_vct_yearly_reports.py \
+    -i data/raw_files/vct_yearly_reports.zip \
+    -o data/unified_csvs/vct.csv
+```
+3. The unified csv files were converted into usable features using the following:
+```shell
+python scripts/create_dec_features.py \
+    -o data/unified_csvs/vt_dec_unified_prepped.csv
+```

@@ -1,9 +1,8 @@
 """Combine VT Department of Environmental Conservation reports from multiple years into a single CSV.
 
-Report files can be obtained from https://anrweb.vermont.gov/vct/_vct/LongTermMonitoringLakes.aspx, selecting
-a year under the "Data by Year" dropdown, and clicking "View Selected Data". Reports are downloaded as xls files
-but their content is actually html. Report files must be zipped into a single folder in order to execute this
-program.
+Report files can be obtained from https://www.healthvermont.gov/environment/tracking/cyanobacteria-blue-green-algae-tracker,
+scrolling down on the page below the map, and selecting a year under the "Season Summaries" dropdown. Reports are
+downloaded as xlsx files. Report files must be zipped into a single folder in order to execute this program.
 
 Usage:
     python scripts/combine_vct_yearly_reports.py \
