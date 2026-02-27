@@ -24,7 +24,7 @@ FEATURE_CSV_PATH = "data/unified_csvs/vt_dec.csv"
 VCT_TO_DEC_SITE_MAPPING_PATH = "data/data_dictionaries/VCT_to_DEC_site_mappings.json"
 
 # Lookback window to use for aggregating features when pairing with the target observation dates
-AGGREGATION_WINDOW_START = timedelta(days=7)
+AGGREGATION_WINDOW_START = timedelta(days=14)
 AGGREGATION_WINDOW_END = timedelta(days=1)
 
 # Feature columns to store in the final report. These were manually selected according to their feature
@@ -119,6 +119,7 @@ def create_dec_features(
             )
         features_aggregated_weekly.append(feature_df_for_target_site)
     all_features = pd.concat(features_aggregated_weekly).reset_index()
+    all_features.columns = [f"dec_{c}" for c in all_features.columns]
     if dst is not None:  # Optionally save the results to disk
         all_features.to_csv(dst, index=False)
         os.chmod(
