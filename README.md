@@ -75,6 +75,10 @@ During exploratory data analysis, the following sources were used:
    `data/raw_files directory`
 2. The raw files were aggregated into unified csvs using the following:
 ```shell
+notebooks/vtab_combine_vct_data_files.jpynb
+
+notebooks/vtab_usgs_nwis_data_pull.jpynb
+
 python scripts/combine_dec_yearly_reports.py \
     -i data/raw_files/vt_dec_yearly_reports.zip \
     -o data/unified_csvs/vt_dec.csv
@@ -85,6 +89,14 @@ python scripts/combine_vct_yearly_reports.py \
 ```
 3. The unified csv files were converted into usable features using the following:
 ```shell
+notebooks/vtab_vct_prep_features_and_targets.jpynb
+
+notebooks/vtab_usgs_prep_features_and_targets.jpynb
+
 python scripts/create_dec_features.py \
     -o data/unified_csvs/vt_dec_unified_prepped.csv
+```
+4. The unified csv files were joined into a single merged feature/target file using the following:
+```shell
+notebooks/vtab_big_data_join.jpynb
 ```
