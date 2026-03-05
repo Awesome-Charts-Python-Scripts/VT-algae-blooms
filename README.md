@@ -100,3 +100,7 @@ python scripts/create_dec_features.py \
 ```shell
 notebooks/vtab_big_data_join.jpynb
 ```
+5. Exploratory data analysis was done on the merged feature/target file using the following:
+```shell
+notebooks/vtab_big_data_join_eda.jpynb
+```
