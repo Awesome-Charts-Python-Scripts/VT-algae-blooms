@@ -1,0 +1,36 @@
+,dtype,non_null,null,pct_null
+dec_temperature,float64,2320,599,20.52
+dec_chlorophyll-a,float64,2667,252,8.63
+dec_total phosphorus,float64,2673,246,8.43
+dec_dissolved phosphorus,float64,2673,246,8.43
+dec_total nitrogen,float64,2673,246,8.43
+dec_secchi depth,float64,2682,237,8.12
+vct_water_temp_trailing,float64,2866,53,1.82
+usgs_conductivity_max_trailing,float64,2916,3,0.1
+usgs_conductivity_min_trailing,float64,2916,3,0.1
+usgs_conductivity_mean_trailing,float64,2916,3,0.1
+usgs_water_temp_mean_trailing,float64,2917,2,0.07
+usgs_water_temp_min_trailing,float64,2917,2,0.07
+usgs_water_temp_max_trailing,float64,2917,2,0.07
+vct_region,object,2919,0,0.0
+vct_report_date,datetime64[ns],2919,0,0.0
+vct_latitude,float64,2919,0,0.0
+vct_microcystin_trailing,Int64,2919,0,0.0
+vct_oscillatoria_trailing,Int64,2919,0,0.0
+vct_water_surface_trailing,object,2919,0,0.0
+noaa_TMIN,float64,2919,0,0.0
+noaa_TMAX,float64,2919,0,0.0
+noaa_PRCP,float64,2919,0,0.0
+vct_longitude,float64,2919,0,0.0
+vct_anabaena_trailing,Int64,2919,0,0.0
+vct_aphanizomenon_trailing,Int64,2919,0,0.0
+noaa_AWND,float64,2919,0,0.0
+noaa_WSF2,float64,2919,0,0.0
+noaa_TAVG,float64,2919,0,0.0
+noaa_WDF5,float64,2919,0,0.0
+noaa_WSF5,float64,2919,0,0.0
+noaa_SNOW,float64,2919,0,0.0
+noaa_WDF2,float64,2919,0,0.0
+noaa_SNWD,float64,2919,0,0.0
+vct_target_bloom,Int64,2919,0,0.0
+vct_target_bloom_intensity,object,2919,0,0.0
