@@ -72,7 +72,7 @@ def create_dec_features(
     # To align our features with our target observations, we create a dataframe from our targets that replicates
     # each row so that we can easily marge on our feature dataframe for the entire window. We then later group
     # by the target observation date to aggregate all feature rows across the window.
-    target_df["feature_window"] = target_df["report_date"].apply(
+    target_df["feature_window"] = target_df["vct_report_date"].apply(
         lambda dt: pd.date_range(
             start=dt - AGGREGATION_WINDOW_START,
             end=dt - AGGREGATION_WINDOW_END,
@@ -108,7 +108,7 @@ def create_dec_features(
             ).drop(columns=["feature_window"])
             # Aggregate across the window using a mean
             weekly_avg_df = target_merged_with_features.groupby(
-                ["region", "report_date"]
+                ["region", "vct_report_date"]
             ).mean()
             if feature_df_for_target_site.empty:
                 feature_df_for_target_site = weekly_avg_df
@@ -129,11 +129,11 @@ def create_dec_features(
 
 
 def _get_targets(src: str) -> pd.DataFrame:
-    target_df = pd.read_csv(src).astype({"latitude": float, "longitude": float})
-    target_df["report_date"] = pd.to_datetime(
-        target_df["report_date"], format="%m/%d/%Y"
+    target_df = pd.read_csv(src)
+    target_df["vct_report_date"] = pd.to_datetime(
+        target_df["vct_report_date"], format="%Y-%m-%d"
     ).dt.date
-    return target_df[["region", "report_date"]]
+    return target_df[["region", "vct_report_date"]]
 
 
 def _get_dec_features(src):
