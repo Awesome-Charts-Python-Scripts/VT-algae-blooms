@@ -82,9 +82,21 @@ python scripts/combine_dec_yearly_reports.py \
 python scripts/combine_vct_yearly_reports.py \
     -i data/raw_files/vct_yearly_reports.zip \
     -o data/unified_csvs/vct.csv
+
+notebooks/vtab_combine_vct_data_files.jpynb
+
+notebooks/vtab_usgs_nwis_data_pull.jpynb
 ```
 3. The unified csv files were converted into usable features using the following:
 ```shell
+notebooks/vtab_vct_prep_features_and_targets.jpynb
+
+notebooks/vtab_usgs_prep_features_and_targets.jpynb
+
 python scripts/create_dec_features.py \
     -o data/unified_csvs/vt_dec_unified_prepped.csv
+```
+4. The unified csv files were joined into a single merged feature/target file using the following:
+```shell
+notebooks/vtab_big_data_join.jpynb
 ```
