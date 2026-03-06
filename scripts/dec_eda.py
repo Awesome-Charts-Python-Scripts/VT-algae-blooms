@@ -46,7 +46,7 @@ def visualize(availability_threshold: float = 0.0):
     feature_df = create_dec_features(FEATURE_COLUMNS_OF_INTEREST)
 
     # Get the list of columns meeting the availability threshold
-    feature_df_availability = feature_df.groupby("region").apply(
+    feature_df_availability = feature_df.groupby("dec_region").apply(
         lambda grp: 1 - grp.isnull().mean()
     )
     columns_meeting_availability_threshold = list(
@@ -60,7 +60,7 @@ def visualize(availability_threshold: float = 0.0):
 
     # Generate a grid of plots for each station X feature
     fig, axs = plt.subplots(
-        nrows=feature_df["region"].nunique(),
+        nrows=feature_df["dec_region"].nunique(),
         ncols=len(columns_meeting_availability_threshold),
         figsize=(16, 8),
         layout="constrained",
@@ -69,7 +69,7 @@ def visualize(availability_threshold: float = 0.0):
 
     # Iterate through all feature regions (target monitoring sites)
     plt_row = 0
-    for target_site, grp in feature_df.groupby("region"):
+    for target_site, grp in feature_df.groupby("dec_region"):
         plt_col = 0
         for col in grp[columns_meeting_availability_threshold]:
             # Generate a colormap plot of all the missing (nan) data entries
@@ -89,7 +89,7 @@ def visualize(availability_threshold: float = 0.0):
         plt_row += 1
 
     # Set the y-axis labels using the region names
-    for ax, region in zip(axs[:, 0], feature_df["region"].unique()):
+    for ax, region in zip(axs[:, 0], feature_df["dec_region"].unique()):
         ax.set_ylabel(
             "\n".join(region.split(" ")), rotation=0, size="large", labelpad=30
         )
