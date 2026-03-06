@@ -1,4 +1,4 @@
-DATE,noaa_PRCP,noaa_TMAX,noaa_TMIN,noaa_AWND,noaa_WSF2,noaa_SNWD,noaa_WDF2,noaa_SNOW,noaa_WSF5,noaa_WDF5,noaa_TAVG
+DATE,noaa_precipitation,noaa_air_temp_max,noaa_air_temp_min,noaa_wind_speed_mean,noaa_wind_speed_2_min,noaa_snow_depth,noaa_wind_direction_2_min,noaa_snowfall,noaa_wind_speed_5_min,noaa_wind_direction_5_min,noaa_air_temp_mean
 2012-01-01,,,,,,,,,,,
 2012-01-02,0.5,7.2,-1.1,3.4,10.3,0.0,180.0,0.0,14.3,190.0,
 2012-01-03,1.5,6.95,-3.5999999999999996,4.05,10.3,0.0,255.0,2.5,13.65,265.0,
