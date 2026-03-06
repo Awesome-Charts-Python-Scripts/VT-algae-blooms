@@ -18,4 +18,5 @@ dependencies = [
     "beautifulsoup4",
     "geopandas",
     "matplotlib",
+    "scikit-learn",
 ]
