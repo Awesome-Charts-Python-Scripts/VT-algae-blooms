@@ -3,15 +3,7 @@ CS 5540 class project to use machine learning techniques to predict algae blooms
 
 ## Setup
 ```bash
-# install uv
-pip install uv
-
-# Activate the virtual environment
-# Note that you must be at the project root directory
-source .venv/bin/activate
-
-# Install project packages into the virtual environment
-uv sync
+sh start_env.sh
 ```
 
 
@@ -87,14 +79,17 @@ notebooks/vtab_combine_vct_data_files.jpynb
 
 notebooks/vtab_usgs_nwis_data_pull.jpynb
 ```
-3. The unified csv files were converted into usable features using the following:
+3. The target dataset was created using the following:
 ```shell
-notebooks/vtab_vct_prep_features_and_targets.jpynb
-
-notebooks/vtab_usgs_prep_features_and_targets.jpynb
-
+python scripts/create_vct_targets.py \
+    -o data/unified_csvs/targets.csv
+```
+3. The unified csv files were converted into usable feature datasets using the following:
+```shell
 python scripts/create_dec_features.py \
     -o data/unified_csvs/vt_dec_unified_prepped.csv
+    
+
 ```
 4. The unified csv files were joined into a single merged feature/target file using the following:
 ```shell

@@ -1,4 +1,4 @@
-"""Transform VT Department of Environmental Conservation features so there is onw row per target and save to a CSV.
+"""Transform VT Department of Environmental Conservation features so there is one row per target and save to a CSV.
 
 Transformations occur by averaging all feature measurements from the prior 7 day window for each target observation
 and aligning on nearest location. The nearest feature location to each target observation is determined using a
