@@ -7,7 +7,7 @@ lat/lon per site was used.
 
 Usage:
     python scripts/create_dec_features.py \
-        -o data/unified_csvs/vt_dec_unified_prepped.csv
+        -o data/unified_csvs/dec_features.csv
 """
 
 import os
@@ -16,16 +16,16 @@ import argparse
 import pandas as pd
 from typing import Optional, List
 import numpy as np
-from datetime import timedelta
+
+from utilities.preprocessing_helpers import create_lagged_features
 
 # Input data file paths
-TARGET_CSV_PATH = "data/unified_csvs/vct_unified_prepped.csv"
 FEATURE_CSV_PATH = "data/unified_csvs/vt_dec.csv"
 VCT_TO_DEC_SITE_MAPPING_PATH = "data/data_dictionaries/VCT_to_DEC_site_mappings.json"
 
 # Lookback window to use for aggregating features when pairing with the target observation dates
-AGGREGATION_WINDOW_START = timedelta(days=14)
-AGGREGATION_WINDOW_END = timedelta(days=1)
+LAG_WINDOW_SIZE = 14
+LAG_DAYS = 1
 
 # Feature columns to store in the final report. These were manually selected according to their feature
 # importance and availability of observations.
@@ -54,7 +54,6 @@ def create_dec_features(
     Returns:
         Feature dataframe
     """
-    target_df = _get_targets(TARGET_CSV_PATH)
     raw_feature_df = _get_dec_features(FEATURE_CSV_PATH)
     with open(VCT_TO_DEC_SITE_MAPPING_PATH, "r") as f:
         vct_to_dec_site_mapping = json.load(f)
@@ -64,68 +63,47 @@ def create_dec_features(
     # measurements that occur multiple times per day.
     pivoted_feature_df = raw_feature_df.pivot_table(
         index=["station", "date"], columns="test", values="result", aggfunc=np.nanmean
-    ).sort_index()
+    )
     # Standardize the column names with lowercase and subset to the user requested feature list.
     pivoted_feature_df.columns = [c.lower() for c in pivoted_feature_df.columns]
-    pivoted_feature_df = pivoted_feature_df[features_to_use]
+    pivoted_feature_df = pivoted_feature_df[features_to_use].reset_index()
 
-    # To align our features with our target observations, we create a dataframe from our targets that replicates
-    # each row so that we can easily marge on our feature dataframe for the entire window. We then later group
-    # by the target observation date to aggregate all feature rows across the window.
-    target_df["feature_window"] = target_df["vct_report_date"].apply(
-        lambda dt: pd.date_range(
-            start=dt - AGGREGATION_WINDOW_START,
-            end=dt - AGGREGATION_WINDOW_END,
-            inclusive="both",
-            freq="D",
+    region_feature_dfs = []
+    for region_map in vct_to_dec_site_mapping:
+        feature_df_for_target_site = pd.DataFrame(
+            index=pd.DatetimeIndex(name="date", data=[]), columns=features_to_use
         )
-    )
-    target_df_exploded_by_window = target_df.explode("feature_window").reset_index(
-        drop=True
-    )
-
-    # Iterate over each target monitoring site and aggregate the features over the interval for each corresponding
-    # feature monitoring site. If multiple feature monitoring sites map to the target monitoring site, coalesce
-    # the datasets to minimize the number of null entries.
-    features_aggregated_weekly = []
-    for target_site, grp in target_df_exploded_by_window.groupby("region"):
-        # Get the list of matching feature sites
-        feature_sites = [
-            row["DEC sites"]
-            for row in vct_to_dec_site_mapping
-            if row["VCT site"] == target_site
-        ][0]
-        feature_df_for_target_site = pd.DataFrame()
-        for matching_dec_site in feature_sites:
+        for matching_dec_site in region_map["DEC sites"]:
             # Subselect the feature rows to match the target site
-            feature_rows_for_target_site = pivoted_feature_df.loc[matching_dec_site]
-            # Merge with the target dataframe using the window
-            target_merged_with_features = grp.merge(
-                feature_rows_for_target_site,
-                left_on="feature_window",
-                right_index=True,
-                how="left",
-            ).drop(columns=["feature_window"])
-            # Aggregate across the window using a mean
-            weekly_avg_df = target_merged_with_features.groupby(
-                ["region", "vct_report_date"]
-            ).mean()
-            if feature_df_for_target_site.empty:
-                feature_df_for_target_site = weekly_avg_df
-                continue
-            # If multiple sites can be mapped, coalesce null values
-            feature_df_for_target_site = feature_df_for_target_site.fillna(
-                weekly_avg_df
+            feature_rows_for_target_site = pivoted_feature_df[
+                pivoted_feature_df["station"] == matching_dec_site
+            ].set_index("date")
+            full_index = sorted(
+                set(feature_df_for_target_site.index)
+                | set(feature_rows_for_target_site.index)
             )
-        features_aggregated_weekly.append(feature_df_for_target_site)
-    all_features = pd.concat(features_aggregated_weekly).reset_index()
-    all_features.columns = [f"dec_{c}" for c in all_features.columns]
+            feature_df_for_target_site = feature_df_for_target_site.reindex(
+                full_index
+            ).fillna(feature_rows_for_target_site)
+        region_feature_dfs.append(
+            feature_df_for_target_site.assign(
+                region=region_map["VCT site"]
+            ).reset_index()
+        )
+
+    feature_df = pd.concat(region_feature_dfs)
+    agg_functions = {col: "mean" for col in FEATURE_COLUMNS_OF_INTEREST}
+    feature_df = create_lagged_features(
+        feature_df, "date", "region", LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
+    )
+    feature_df = feature_df[["date", "region", *FEATURE_COLUMNS_OF_INTEREST]]
+    feature_df.columns = [f"dec_{c}" for c in feature_df.columns]
     if dst is not None:  # Optionally save the results to disk
-        all_features.to_csv(dst, index=False)
+        feature_df.to_csv(dst, index=False)
         os.chmod(
             dst, 0o777
         )  # Open up all the file permissions (read/write/execute for all)
-    return all_features
+    return feature_df
 
 
 def _get_targets(src: str) -> pd.DataFrame:
@@ -133,7 +111,7 @@ def _get_targets(src: str) -> pd.DataFrame:
     target_df["vct_report_date"] = pd.to_datetime(
         target_df["vct_report_date"], format="%Y-%m-%d"
     ).dt.date
-    return target_df[["region", "vct_report_date"]]
+    return target_df[["vct_region", "vct_report_date"]]
 
 
 def _get_dec_features(src):
