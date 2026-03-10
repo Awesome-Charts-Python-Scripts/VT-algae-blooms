@@ -33,29 +33,35 @@ test = df[
 
 # Feature columns
 feature_cols = [
-    "vct_water_temp_trailing",
-    "vct_water_surface_trailing",
-    "vct_anabaena_trailing",
-    "vct_aphanizomenon_trailing",
-    "vct_microcystin_trailing",
-    "vct_oscillatoria_trailing",
+    "vct_water_temp_7days",
+    "vct_water_surface_7days",
+    "vct_anabaena_7days",
+    "vct_aphanizomenon_7days",
+    "vct_microcystin_7days",
+    "vct_oscillatoria_7days",
+    "vct_water_temp_14days",
+    "vct_water_surface_14days",
+    "vct_anabaena_14days",
+    "vct_aphanizomenon_14days",
+    "vct_microcystin_14days",
+    "vct_oscillatoria_14days",
     "usgs_water_temp_max_trailing",
     "usgs_water_temp_min_trailing",
     "usgs_water_temp_mean_trailing",
     "usgs_conductivity_max_trailing",
     "usgs_conductivity_min_trailing",
     "usgs_conductivity_mean_trailing",
-    "noaa_PRCP",
-    "noaa_TMAX",
-    "noaa_TMIN",
-    "noaa_AWND",
-    "noaa_WSF2",
-    "noaa_SNWD",
-    "noaa_WDF2",
-    "noaa_SNOW",
-    "noaa_WSF5",
-    "noaa_WDF5",
-    "noaa_TAVG",
+    "noaa_precipitation",
+    "noaa_air_temp_max",
+    "noaa_air_temp_min",
+    "noaa_wind_speed_mean",
+    "noaa_wind_speed_2_min",
+    "noaa_snow_depth",
+    "noaa_wind_direction_2_min",
+    "noaa_snowfall",
+    "noaa_wind_speed_5_min",
+    "noaa_wind_direction_5_min",
+    "noaa_air_temp_mean",
     "dec_total nitrogen",
     "dec_total phosphorus",
     "dec_dissolved phosphorus",
@@ -64,12 +70,12 @@ feature_cols = [
     "dec_temperature"
 ]
 
-categorical_cols = ["vct_water_surface_trailing"]
+# categorical_cols = ["vct_water_surface_trailing"]
 
-numeric_cols = [
-    c for c in feature_cols
-    if c not in categorical_cols
-]
+# numeric_cols = [
+#     c for c in feature_cols
+#     if c not in categorical_cols
+# ]
 
 # Fill in missing numeric values with median
 # Scale data
@@ -80,15 +86,15 @@ numeric_transformer = Pipeline([
 
 # Fill in missing categorical values with most frequent value
 # One Hot Encoding
-categorical_transformer = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent")),
-    ("onehot", OneHotEncoder(handle_unknown="ignore"))
-])
+# categorical_transformer = Pipeline([
+#     ("imputer", SimpleImputer(strategy="most_frequent")),
+#     ("onehot", OneHotEncoder(handle_unknown="ignore"))
+# ])
 
 #Preprocessor
 preprocessor = ColumnTransformer([
-    ("num", numeric_transformer, numeric_cols),
-    ("cat", categorical_transformer, categorical_cols)
+    ("num", numeric_transformer, feature_cols),
+    # ("cat", categorical_transformer, categorical_cols)
 ])
 
 # Pipeline
@@ -122,3 +128,4 @@ for year in years:
     scores.append(score)
 
 print("CV AUC:", np.mean(scores))
+# CV AUC: 0.6719222679761537
