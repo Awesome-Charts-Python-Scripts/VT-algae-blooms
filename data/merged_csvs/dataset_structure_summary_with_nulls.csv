@@ -1,24 +1,25 @@
 ,dtype,non_null,null,pct_null
 dec_temperature,float64,2320,599,20.52
 dec_chlorophyll-a,float64,2667,252,8.63
-dec_total nitrogen,float64,2673,246,8.43
 dec_total phosphorus,float64,2673,246,8.43
+dec_total nitrogen,float64,2673,246,8.43
 dec_dissolved phosphorus,float64,2673,246,8.43
 dec_secchi depth,float64,2682,237,8.12
 vct_water_temp_7days,float64,2798,121,4.15
 vct_water_temp_14days,float64,2866,53,1.82
-usgs_conductivity_mean_7days,float64,2916,3,0.1
 usgs_conductivity_min_7days,float64,2916,3,0.1
+usgs_conductivity_mean_7days,float64,2916,3,0.1
+usgs_conductivity_max_7days,float64,2916,3,0.1
 usgs_conductivity_mean_14days,float64,2916,3,0.1
 usgs_conductivity_max_14days,float64,2916,3,0.1
 usgs_conductivity_min_14days,float64,2916,3,0.1
-usgs_conductivity_max_7days,float64,2916,3,0.1
+usgs_water_temp_min_7days,float64,2917,2,0.07
 usgs_water_temp_max_14days,float64,2917,2,0.07
 usgs_water_temp_min_14days,float64,2917,2,0.07
 usgs_water_temp_max_7days,float64,2917,2,0.07
-usgs_water_temp_min_7days,float64,2917,2,0.07
-usgs_water_temp_mean_7days,float64,2917,2,0.07
 usgs_water_temp_mean_14days,float64,2917,2,0.07
+usgs_water_temp_mean_7days,float64,2917,2,0.07
+vct_year,Int64,2919,0,0.0
 vct_oscillatoria_14days,Int64,2919,0,0.0
 vct_microcystin_14days,Int64,2919,0,0.0
 vct_aphanizomenon_14days,Int64,2919,0,0.0
@@ -35,8 +36,8 @@ vct_longitude,float64,2919,0,0.0
 vct_water_surface_7days,float64,2919,0,0.0
 vct_day_of_year,Int64,2919,0,0.0
 vct_latitude,float64,2919,0,0.0
-vct_report_date,datetime64[ns],2919,0,0.0
 vct_region,string,2919,0,0.0
+vct_report_date,datetime64[ns],2919,0,0.0
 noaa_precipitation,float64,2919,0,0.0
 vct_target_bloom_14days,Int64,2919,0,0.0
 noaa_air_temp_min,float64,2919,0,0.0
