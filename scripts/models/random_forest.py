@@ -2,9 +2,18 @@
 
 Recommended most important features are:
 [
-    'vct_water_surface', 'usgs_conductivity_mean_trailing', 'noaa_precipitation', 'noaa_wind_speed_mean',
-    'noaa_wind_direction_5_min', 'noaa_air_temp_mean', 'dec_total nitrogen', 'dec_total phosphorus',
-    'dec_dissolved phosphorus', 'dec_chlorophyll-a', 'dec_secchi depth', 'dec_temperature'
+    'vct_water_surface',
+    'usgs_conductivity_mean',
+    'noaa_precipitation',
+    'noaa_wind_speed_mean',
+    'noaa_wind_direction_5_min',
+    'noaa_air_temp_mean',
+    'dec_total nitrogen',
+    'dec_total phosphorus',
+    'dec_dissolved phosphorus',
+    'dec_chlorophyll-a',
+    'dec_secchi depth',
+    'dec_temperature'
 ]
 
 
@@ -19,27 +28,24 @@ from typing import List
 
 from utilities.preprocessing_helpers import get_joined_features_and_targets
 
-# Input data file paths
-DATA_CSV_PATH = "data/merged_csvs/algae_merged.csv"
-
 TEST_SPLIT_DATE = date(2021, 1, 1)
 
 # Comment out features that are highly correlated with other features
 DEFAULT_FEATURE_LIST = [
     #  "vct_latitude",
     #  "vct_longitude",
-    #  "vct_water_temp_trailing",
+    #  "vct_water_temp",
     "vct_water_surface",  # We should probably convert this to ordinal and do a trailing mean
     "vct_anabaena",
     "vct_aphanizomenon",
     "vct_microcystin",
     "vct_oscillatoria",
-    #  "usgs_water_temp_max_trailing",
-    #  "usgs_water_temp_min_trailing",
-    #   "usgs_water_temp_mean_trailing",
-    #  "usgs_conductivity_max_trailing",
-    #  "usgs_conductivity_min_trailing",
-    "usgs_conductivity_mean_trailing",
+    #  "usgs_water_temp_max",
+    #  "usgs_water_temp_min",
+    #   "usgs_water_temp_mean",
+    #  "usgs_conductivity_max",
+    #  "usgs_conductivity_min",
+    "usgs_conductivity_mean",
     "noaa_precipitation",
     # 'noaa_air_temp_max',
     # 'noaa_air_temp_min',
@@ -92,7 +98,7 @@ def create_model(dst: str):
 def _get_features_and_targets(target: str, feature_list: List[str]):
     df = get_joined_features_and_targets()
     df["dec_temperature"] = df["dec_temperature"].fillna(
-        df["usgs_water_temp_mean_trailing"]
+        df["usgs_water_temp_mean"]
     )
     index_cols = ["vct_report_date", "vct_region"]
     df = (

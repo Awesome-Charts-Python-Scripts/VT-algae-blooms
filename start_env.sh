@@ -10,5 +10,5 @@ source .venv/bin/activate
 # Install project packages into the virtual environment
 uv sync
 
-export PATH=$(pwd):$PATH
-export PYTHONPATH=$(pwd):$PYTHONPATH
+# Install this project into the virtualenv as editable
+uv pip install -e .

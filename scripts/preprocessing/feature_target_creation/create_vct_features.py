@@ -1,32 +1,31 @@
-"""Transform VT Department of Health data into a feature dataset by aggregating features over a 14-day window
+"""Transform VT Cyanobacteria Tracker data into a feature dataset by aggregating features over a window
 
 Usage:
-    python scripts/create_vct_features.py \
-        -o data/unified_csvs/vct_features.csv
+    python scripts/preprocessing/feature_target_creation/create_vct_features.py
 """
 
 import os
-import argparse
-import pandas as pd
 import numpy as np
+import pandas as pd
+from typing import Optional
 
+from utilities import data_paths
 from utilities.preprocessing_helpers import load_vct_dataset, create_lagged_features
 
-# Input data file paths
-SRC_CSV_PATH = "data/unified_csvs/vct_unified.csv"
-LAG_WINDOW_SIZE = 14
+# Lag window to use for aggregating features
 LAG_DAYS = 1
+LAG_WINDOW_SIZE = 14
 
 
-def create_vct_targets(dst: str) -> pd.DataFrame:
-    """Create VCT feature data by lagging data over a 14-day window.
+def create_vct_features(dst: Optional[str] = None) -> pd.DataFrame:
+    """Create VCT feature data by lagging data over a window.
 
     Args:
-        dst: output file destination
+        dst: output file destination. If empty, no output file is saved
     Returns:
         Feature dataframe
     """
-    vct_df = load_vct_dataset(SRC_CSV_PATH)
+    vct_df = load_vct_dataset()
 
     # One-hot encode the most observed cyanotaxa types
     vct_df = _one_hot_encode_cynotaxa(vct_df)
@@ -82,11 +81,12 @@ def create_vct_targets(dst: str) -> pd.DataFrame:
         vct_df, "report_date", "region", LAG_DAYS, LAG_WINDOW_SIZE, aggregation_methods
     )
     vct_df.columns = [f"vct_{col}" for col in vct_df.columns]
-    vct_df.to_csv(dst, index=False)
-    os.chmod(
-        dst, 0o777
-    )  # Open up all the file permissions (read/write/execute for all)
-    return vct_df
+    if dst is not None:  # Optionally save the results to disk
+        vct_df.to_csv(dst, index=False)
+        os.chmod(
+            dst, 0o777
+        )  # Open up all the file permissions (read/write/execute for all)
+        return vct_df
 
 
 def _one_hot_encode_cynotaxa(vct_df: pd.DataFrame) -> pd.DataFrame:
@@ -117,14 +117,7 @@ def _encode_water_surface_as_ordinal(water_surface: str) -> float:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Generate a CSV of VT VCT features to correspond with our targets."
-    )
-    parser.add_argument(
-        "-o", action="store", default="out.csv", help="Output file name"
-    )
-    args = parser.parse_args()
-    create_vct_targets(dst=args.o)
+    create_vct_features(dst=data_paths.VCT_FEATURES_PATH)
 
 
 if __name__ == "__main__":

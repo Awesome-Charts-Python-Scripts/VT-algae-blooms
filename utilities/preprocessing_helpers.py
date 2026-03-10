@@ -8,12 +8,12 @@ MIN_DATE = date(2015, 1, 1)
 MAX_DATE = date(2022, 12, 31)
 
 
-def load_vct_dataset(src: str = "data/unified_csvs/vct_unified.csv") -> pd.DataFrame:
+def load_vct_dataset() -> pd.DataFrame:
     """Load the VT Department of Health dataset
 
     Note that this filters data using a cutoff year and to sites only in Lake Champlain.
     """
-    df = pd.read_csv(src)
+    df = pd.read_csv(data_paths.VCT_UNIFIED_PATH)
     df.columns = df.columns.str.lower()
     df = df.rename(
         columns={

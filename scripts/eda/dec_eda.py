@@ -9,7 +9,7 @@ import argparse
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
-from create_dec_features import create_dec_features
+from scripts.preprocessing.create_dec_features import create_dec_features
 
 FEATURE_COLUMNS_OF_INTEREST = [
     "total nitrogen",
@@ -101,8 +101,11 @@ def main():
         description="Generate a CSV of VT DEC features to correspond 1-to-1 with our targets."
     )
     parser.add_argument(
-        "-t", "--threshold", action="store", default=0.0,
-        help="Only plot features that have at least one site meeting this data availability threshold"
+        "-t",
+        "--threshold",
+        action="store",
+        default=0.0,
+        help="Only plot features that have at least one site meeting this data availability threshold",
     )
     args = parser.parse_args()
     visualize(float(args.threshold))
