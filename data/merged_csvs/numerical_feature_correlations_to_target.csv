@@ -1,0 +1,38 @@
+feature,correlation
+vct_target_bloom_intensity_7days,0.5455975679816722
+vct_target_bloom_intensity_14days,0.5168230949912261
+dec_total phosphorus,0.4829332832336686
+dec_chlorophyll-a,0.4158673146297123
+vct_longitude,0.3972018425782634
+vct_latitude,0.37575480638120357
+dec_secchi depth,-0.3651783967713755
+dec_dissolved phosphorus,0.30497618042693686
+dec_total nitrogen,0.26524057599858075
+dec_temperature,0.2267817109055623
+usgs_water_temp_min_14days,0.19144195378772416
+usgs_water_temp_mean_14days,0.1888582193592932
+usgs_water_temp_max_14days,0.18269754378318276
+usgs_water_temp_min_7days,0.17713998611867857
+usgs_water_temp_mean_7days,0.17104686950083403
+usgs_water_temp_max_7days,0.16172984294848744
+noaa_wind_speed_2_min,-0.1610383958371116
+noaa_wind_speed_5_min,-0.1532760518625312
+noaa_wind_speed_mean,-0.1527534775458203
+vct_water_surface_14days,-0.13167467437722744
+vct_water_surface_7days,-0.11713958151260762
+vct_water_temp_14days,0.10919929535357548
+vct_water_temp_7days,0.10508235275093974
+noaa_air_temp_min,0.10247226252786036
+noaa_air_temp_mean,0.09340469330535026
+noaa_air_temp_max,0.0870653661045136
+noaa_precipitation,-0.06226106207170352
+usgs_conductivity_max_14days,-0.05365037877779717
+usgs_conductivity_max_7days,-0.04314222574519609
+noaa_snowfall,-0.030457355340261515
+noaa_snow_depth,-0.028214715383270764
+noaa_wind_direction_5_min,-0.022539765358953932
+noaa_wind_direction_2_min,0.015253164507571228
+usgs_conductivity_mean_14days,-0.014359395445129531
+usgs_conductivity_mean_7days,-0.007742180933804861
+usgs_conductivity_min_14days,0.003894236223768701
+usgs_conductivity_min_7days,-0.0016185606784503538

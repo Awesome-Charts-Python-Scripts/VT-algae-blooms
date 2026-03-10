@@ -1,0 +1,704 @@
+Variable 1,Variable 2,Correlation
+usgs_water_temp_mean_14days,usgs_water_temp_max_14days,1.0
+usgs_water_temp_mean_7days,usgs_water_temp_max_7days,0.99
+usgs_water_temp_min_14days,usgs_water_temp_mean_14days,0.99
+usgs_water_temp_min_7days,usgs_water_temp_mean_7days,0.99
+noaa_air_temp_mean,noaa_air_temp_max,0.99
+usgs_water_temp_mean_7days,usgs_water_temp_max_14days,0.98
+usgs_water_temp_min_7days,usgs_water_temp_mean_14days,0.98
+usgs_water_temp_min_14days,usgs_water_temp_max_14days,0.98
+usgs_water_temp_min_7days,usgs_water_temp_max_14days,0.98
+noaa_air_temp_min,noaa_air_temp_mean,0.98
+vct_longitude,vct_latitude,0.98
+usgs_water_temp_min_7days,usgs_water_temp_max_7days,0.98
+noaa_snowfall,noaa_snow_depth,0.98
+usgs_water_temp_mean_7days,usgs_water_temp_mean_14days,0.97
+usgs_conductivity_mean_7days,usgs_conductivity_mean_14days,0.97
+usgs_water_temp_max_7days,usgs_water_temp_max_14days,0.97
+usgs_water_temp_min_7days,usgs_water_temp_min_14days,0.97
+noaa_wind_speed_5_min,noaa_wind_speed_2_min,0.97
+usgs_water_temp_mean_14days,usgs_water_temp_max_7days,0.96
+usgs_water_temp_min_14days,usgs_water_temp_mean_7days,0.95
+usgs_conductivity_min_7days,usgs_conductivity_min_14days,0.94
+noaa_air_temp_min,noaa_air_temp_max,0.94
+usgs_conductivity_max_7days,usgs_conductivity_max_14days,0.94
+usgs_water_temp_min_14days,usgs_water_temp_max_7days,0.93
+usgs_conductivity_min_14days,usgs_conductivity_mean_14days,0.92
+usgs_conductivity_mean_14days,usgs_conductivity_max_14days,0.92
+vct_target_bloom_intensity_7days,vct_target_bloom_intensity_14days,0.91
+usgs_conductivity_min_14days,usgs_conductivity_mean_7days,0.9
+vct_water_temp_7days,vct_water_temp_14days,0.9
+usgs_conductivity_mean_7days,usgs_conductivity_max_7days,0.9
+usgs_conductivity_min_7days,usgs_conductivity_mean_7days,0.89
+usgs_conductivity_mean_7days,usgs_conductivity_max_14days,0.88
+usgs_water_temp_max_7days,noaa_air_temp_min,0.88
+usgs_conductivity_mean_14days,usgs_conductivity_max_7days,0.88
+usgs_water_temp_max_7days,noaa_air_temp_mean,0.88
+usgs_water_temp_max_7days,noaa_air_temp_max,0.87
+usgs_water_temp_max_14days,dec_temperature,0.87
+noaa_wind_speed_mean,noaa_wind_speed_2_min,0.87
+noaa_wind_speed_mean,noaa_wind_speed_5_min,0.87
+usgs_conductivity_min_7days,usgs_conductivity_mean_14days,0.87
+usgs_water_temp_mean_14days,dec_temperature,0.86
+usgs_water_temp_mean_7days,dec_temperature,0.86
+usgs_water_temp_min_7days,dec_temperature,0.85
+usgs_water_temp_max_7days,dec_temperature,0.85
+usgs_water_temp_mean_7days,noaa_air_temp_min,0.85
+usgs_water_temp_min_14days,dec_temperature,0.84
+usgs_water_temp_mean_7days,noaa_air_temp_mean,0.84
+usgs_water_temp_mean_7days,noaa_air_temp_max,0.84
+usgs_water_temp_max_14days,noaa_air_temp_min,0.82
+usgs_water_temp_max_14days,noaa_air_temp_mean,0.81
+usgs_water_temp_min_7days,noaa_air_temp_min,0.81
+usgs_water_temp_max_14days,noaa_air_temp_max,0.8
+vct_water_surface_7days,vct_water_surface_14days,0.8
+usgs_water_temp_min_7days,noaa_air_temp_mean,0.79
+usgs_water_temp_mean_14days,noaa_air_temp_min,0.78
+usgs_water_temp_min_7days,noaa_air_temp_max,0.78
+dec_total phosphorus,dec_dissolved phosphorus,0.77
+usgs_water_temp_mean_14days,noaa_air_temp_mean,0.76
+usgs_conductivity_min_14days,usgs_conductivity_max_14days,0.76
+usgs_water_temp_mean_14days,noaa_air_temp_max,0.75
+usgs_conductivity_min_14days,usgs_conductivity_max_7days,0.74
+usgs_water_temp_min_14days,noaa_air_temp_min,0.73
+vct_latitude,dec_total phosphorus,0.73
+vct_longitude,dec_total phosphorus,0.72
+noaa_air_temp_min,dec_temperature,0.71
+dec_total phosphorus,dec_secchi depth,-0.7
+usgs_water_temp_min_14days,noaa_air_temp_mean,0.7
+noaa_air_temp_mean,dec_temperature,0.7
+usgs_conductivity_min_7days,usgs_conductivity_max_7days,0.7
+usgs_conductivity_min_7days,usgs_conductivity_max_14days,0.69
+vct_target_bloom_intensity_14days,dec_total phosphorus,0.69
+usgs_water_temp_min_14days,noaa_air_temp_max,0.69
+noaa_wind_direction_5_min,noaa_wind_direction_2_min,0.69
+noaa_air_temp_max,dec_temperature,0.68
+dec_total phosphorus,dec_chlorophyll-a,0.67
+vct_target_bloom_intensity_7days,dec_total phosphorus,0.66
+vct_target_bloom_intensity_14days,dec_chlorophyll-a,0.64
+dec_secchi depth,dec_chlorophyll-a,-0.61
+vct_target_bloom_intensity_14days,vct_longitude,0.61
+vct_water_temp_7days,usgs_water_temp_max_7days,0.61
+vct_target_bloom_intensity_7days,dec_chlorophyll-a,0.6
+vct_water_temp_7days,usgs_water_temp_mean_7days,0.6
+vct_water_temp_7days,usgs_water_temp_max_14days,0.59
+vct_latitude,dec_dissolved phosphorus,0.59
+vct_target_bloom_intensity_14days,dec_secchi depth,-0.58
+vct_water_temp_7days,usgs_water_temp_min_7days,0.58
+vct_target_bloom_intensity_14days,vct_latitude,0.58
+vct_water_temp_7days,usgs_water_temp_mean_14days,0.58
+vct_water_temp_7days,noaa_air_temp_max,0.57
+vct_longitude,dec_dissolved phosphorus,0.56
+vct_target_bloom_intensity_7days,vct_longitude,0.56
+vct_water_temp_14days,usgs_water_temp_max_14days,0.56
+dec_total phosphorus,dec_total nitrogen,0.55
+vct_water_temp_14days,usgs_water_temp_mean_14days,0.55
+vct_water_temp_7days,usgs_water_temp_min_14days,0.55
+vct_water_temp_14days,usgs_water_temp_mean_7days,0.55
+vct_water_temp_7days,noaa_air_temp_mean,0.55
+vct_water_temp_14days,usgs_water_temp_max_7days,0.55
+vct_target_bloom_intensity_7days,vct_target_bloom_intensity,0.55
+vct_water_temp_14days,usgs_water_temp_min_7days,0.54
+vct_water_temp_14days,usgs_water_temp_min_14days,0.54
+vct_target_bloom_intensity_7days,dec_secchi depth,-0.54
+vct_target_bloom_intensity_7days,vct_latitude,0.53
+vct_water_temp_14days,dec_temperature,0.52
+vct_target_bloom_intensity_14days,vct_target_bloom_intensity,0.52
+vct_water_temp_7days,noaa_air_temp_min,0.51
+vct_longitude,dec_secchi depth,-0.51
+dec_secchi depth,dec_dissolved phosphorus,-0.51
+vct_water_temp_7days,dec_temperature,0.5
+dec_total nitrogen,dec_chlorophyll-a,0.5
+vct_water_temp_14days,noaa_air_temp_max,0.49
+vct_target_bloom_intensity,dec_total phosphorus,0.48
+vct_latitude,dec_secchi depth,-0.46
+vct_water_temp_14days,noaa_air_temp_mean,0.46
+vct_longitude,dec_chlorophyll-a,0.44
+vct_water_temp_14days,noaa_air_temp_min,0.43
+vct_target_bloom_intensity_14days,dec_dissolved phosphorus,0.43
+vct_latitude,dec_chlorophyll-a,0.43
+vct_target_bloom_intensity,dec_chlorophyll-a,0.42
+usgs_water_temp_min_7days,noaa_wind_speed_mean,-0.41
+vct_latitude,dec_total nitrogen,0.41
+usgs_water_temp_mean_7days,noaa_wind_speed_mean,-0.41
+vct_target_bloom_intensity_7days,dec_dissolved phosphorus,0.4
+dec_total nitrogen,dec_dissolved phosphorus,0.4
+vct_target_bloom_intensity,vct_longitude,0.4
+usgs_water_temp_mean_14days,noaa_wind_speed_mean,-0.4
+usgs_water_temp_max_7days,noaa_wind_speed_mean,-0.39
+vct_target_bloom_intensity_14days,dec_total nitrogen,0.39
+usgs_water_temp_min_14days,noaa_wind_speed_mean,-0.39
+dec_total nitrogen,dec_secchi depth,-0.39
+usgs_water_temp_max_14days,noaa_wind_speed_mean,-0.39
+usgs_water_temp_min_7days,noaa_wind_speed_5_min,-0.38
+usgs_water_temp_min_7days,noaa_wind_speed_2_min,-0.38
+vct_target_bloom_intensity,vct_latitude,0.38
+vct_target_bloom_intensity_7days,dec_total nitrogen,0.37
+usgs_water_temp_mean_7days,noaa_wind_speed_5_min,-0.37
+usgs_water_temp_min_14days,noaa_wind_speed_5_min,-0.37
+usgs_water_temp_mean_7days,noaa_wind_speed_2_min,-0.37
+vct_target_bloom_intensity,dec_secchi depth,-0.37
+vct_longitude,dec_total nitrogen,0.36
+usgs_water_temp_min_14days,noaa_wind_speed_2_min,-0.36
+usgs_water_temp_mean_14days,noaa_wind_speed_5_min,-0.36
+usgs_water_temp_mean_14days,noaa_wind_speed_2_min,-0.36
+usgs_water_temp_max_7days,noaa_wind_speed_5_min,-0.36
+noaa_wind_speed_mean,dec_temperature,-0.35
+vct_water_surface_14days,dec_secchi depth,0.35
+usgs_water_temp_max_7days,noaa_wind_speed_2_min,-0.35
+usgs_water_temp_max_14days,noaa_wind_speed_5_min,-0.35
+usgs_water_temp_max_14days,noaa_wind_speed_2_min,-0.34
+vct_longitude,dec_temperature,0.34
+dec_dissolved phosphorus,dec_chlorophyll-a,0.33
+noaa_wind_speed_5_min,dec_temperature,-0.33
+noaa_wind_speed_2_min,dec_temperature,-0.31
+vct_water_surface_14days,dec_total phosphorus,-0.31
+vct_target_bloom_intensity,dec_dissolved phosphorus,0.3
+vct_latitude,dec_temperature,0.3
+dec_temperature,dec_secchi depth,-0.3
+vct_water_surface_14days,dec_dissolved phosphorus,-0.3
+dec_total phosphorus,dec_temperature,0.28
+usgs_water_temp_mean_14days,noaa_precipitation,-0.27
+usgs_water_temp_max_14days,noaa_precipitation,-0.27
+usgs_water_temp_min_14days,noaa_precipitation,-0.27
+vct_water_surface_7days,dec_secchi depth,0.27
+vct_target_bloom_intensity,dec_total nitrogen,0.27
+dec_temperature,dec_dissolved phosphorus,0.26
+vct_water_surface_7days,noaa_wind_speed_mean,0.26
+vct_water_surface_7days,dec_total phosphorus,-0.26
+vct_water_surface_7days,dec_dissolved phosphorus,-0.25
+usgs_water_temp_mean_7days,noaa_precipitation,-0.25
+usgs_water_temp_min_7days,noaa_precipitation,-0.25
+usgs_water_temp_max_7days,noaa_precipitation,-0.25
+vct_water_surface_14days,noaa_wind_speed_mean,0.25
+noaa_snowfall,noaa_air_temp_max,-0.24
+vct_water_surface_14days,vct_target_bloom_intensity_14days,-0.24
+vct_water_temp_7days,noaa_wind_speed_mean,-0.24
+usgs_water_temp_min_14days,usgs_conductivity_min_7days,0.23
+noaa_snowfall,noaa_air_temp_mean,-0.23
+vct_target_bloom_intensity,dec_temperature,0.23
+vct_target_bloom_intensity_7days,dec_temperature,0.23
+usgs_water_temp_min_14days,usgs_conductivity_min_14days,0.22
+noaa_snow_depth,noaa_air_temp_max,-0.22
+noaa_precipitation,noaa_air_temp_max,-0.22
+noaa_precipitation,dec_temperature,-0.22
+usgs_water_temp_min_14days,usgs_conductivity_mean_7days,0.22
+vct_water_surface_7days,noaa_wind_speed_2_min,0.22
+noaa_wind_speed_5_min,noaa_precipitation,0.22
+vct_water_surface_14days,vct_target_bloom_intensity_7days,-0.22
+vct_water_surface_7days,noaa_wind_speed_5_min,0.21
+noaa_snowfall,noaa_air_temp_min,-0.21
+vct_water_surface_7days,vct_target_bloom_intensity_7days,-0.21
+noaa_snow_depth,noaa_air_temp_mean,-0.21
+usgs_water_temp_mean_14days,usgs_conductivity_min_7days,0.21
+usgs_water_temp_min_7days,usgs_conductivity_min_7days,0.21
+usgs_conductivity_min_14days,noaa_wind_direction_5_min,-0.21
+vct_water_temp_14days,noaa_wind_speed_mean,-0.21
+usgs_water_temp_mean_14days,usgs_conductivity_min_14days,0.2
+usgs_water_temp_mean_14days,usgs_conductivity_mean_7days,0.2
+vct_target_bloom_intensity_14days,dec_temperature,0.2
+usgs_water_temp_max_14days,usgs_conductivity_min_7days,0.2
+noaa_snow_depth,noaa_air_temp_min,-0.2
+vct_water_surface_14days,noaa_wind_speed_5_min,0.2
+usgs_water_temp_min_7days,usgs_conductivity_mean_7days,0.2
+usgs_conductivity_min_7days,noaa_wind_direction_5_min,-0.2
+usgs_water_temp_max_14days,usgs_conductivity_mean_7days,0.19
+usgs_water_temp_max_7days,noaa_snowfall,-0.19
+usgs_conductivity_mean_7days,noaa_air_temp_min,0.19
+vct_water_temp_7days,noaa_wind_direction_5_min,0.19
+dec_temperature,dec_chlorophyll-a,0.19
+vct_water_surface_14days,noaa_wind_speed_2_min,0.19
+vct_target_bloom_intensity,usgs_water_temp_min_14days,0.19
+usgs_water_temp_min_7days,usgs_conductivity_min_14days,0.19
+usgs_water_temp_max_14days,usgs_conductivity_min_14days,0.19
+vct_water_temp_14days,noaa_wind_direction_5_min,0.19
+vct_target_bloom_intensity,usgs_water_temp_mean_14days,0.19
+vct_water_surface_14days,dec_total nitrogen,-0.19
+usgs_water_temp_mean_7days,noaa_snowfall,-0.19
+vct_water_surface_7days,vct_target_bloom_intensity_14days,-0.19
+usgs_water_temp_mean_7days,usgs_conductivity_min_7days,0.19
+vct_target_bloom_intensity_7days,noaa_wind_speed_2_min,-0.19
+usgs_water_temp_mean_7days,usgs_conductivity_mean_7days,0.18
+vct_target_bloom_intensity_7days,noaa_wind_speed_mean,-0.18
+vct_target_bloom_intensity,usgs_water_temp_max_14days,0.18
+noaa_wind_speed_5_min,noaa_air_temp_min,-0.18
+noaa_wind_speed_mean,noaa_air_temp_max,-0.18
+usgs_water_temp_min_14days,usgs_conductivity_mean_14days,0.18
+noaa_wind_speed_2_min,noaa_air_temp_min,-0.18
+usgs_conductivity_min_7days,noaa_wind_direction_2_min,-0.18
+vct_water_surface_14days,dec_chlorophyll-a,-0.18
+vct_target_bloom_intensity,usgs_water_temp_min_7days,0.18
+usgs_water_temp_max_7days,noaa_snow_depth,-0.18
+noaa_wind_speed_mean,noaa_snowfall,0.18
+usgs_water_temp_min_7days,noaa_snowfall,-0.18
+usgs_water_temp_max_14days,noaa_snowfall,-0.18
+usgs_conductivity_min_7days,noaa_air_temp_min,0.17
+usgs_water_temp_max_7days,usgs_conductivity_mean_7days,0.17
+vct_water_surface_7days,dec_total nitrogen,-0.17
+vct_water_temp_7days,noaa_precipitation,-0.17
+noaa_wind_speed_2_min,noaa_precipitation,0.17
+usgs_conductivity_min_14days,noaa_wind_direction_2_min,-0.17
+usgs_water_temp_mean_7days,usgs_conductivity_min_14days,0.17
+usgs_water_temp_max_7days,usgs_conductivity_min_7days,0.17
+vct_target_bloom_intensity,usgs_water_temp_mean_7days,0.17
+vct_target_bloom_intensity_7days,noaa_wind_speed_5_min,-0.17
+usgs_water_temp_mean_7days,noaa_snow_depth,-0.17
+noaa_precipitation,noaa_air_temp_mean,-0.17
+usgs_conductivity_max_14days,noaa_wind_speed_2_min,0.17
+usgs_water_temp_mean_14days,usgs_conductivity_mean_14days,0.17
+vct_water_temp_14days,noaa_precipitation,-0.17
+vct_water_temp_7days,noaa_wind_speed_5_min,-0.17
+vct_water_surface_14days,noaa_air_temp_max,-0.17
+vct_target_bloom_intensity_7days,usgs_water_temp_min_14days,0.17
+usgs_water_temp_mean_14days,noaa_snowfall,-0.17
+usgs_conductivity_mean_7days,noaa_air_temp_mean,0.16
+vct_water_temp_14days,vct_target_bloom_intensity_7days,0.16
+noaa_wind_speed_mean,noaa_snow_depth,0.16
+usgs_water_temp_max_14days,usgs_conductivity_mean_14days,0.16
+vct_target_bloom_intensity,usgs_water_temp_max_7days,0.16
+noaa_wind_speed_5_min,noaa_air_temp_max,-0.16
+vct_target_bloom_intensity_7days,usgs_water_temp_mean_14days,0.16
+vct_target_bloom_intensity,noaa_wind_speed_2_min,-0.16
+usgs_water_temp_min_7days,noaa_snow_depth,-0.16
+usgs_water_temp_max_14days,noaa_snow_depth,-0.16
+usgs_water_temp_min_14days,dec_chlorophyll-a,0.16
+usgs_water_temp_max_7days,usgs_conductivity_min_14days,0.16
+noaa_wind_speed_mean,noaa_air_temp_min,-0.16
+usgs_conductivity_min_14days,noaa_air_temp_min,0.16
+noaa_wind_speed_2_min,noaa_air_temp_max,-0.15
+usgs_conductivity_mean_14days,noaa_air_temp_min,0.15
+vct_water_temp_7days,vct_water_surface_14days,-0.15
+usgs_water_temp_min_14days,noaa_snowfall,-0.15
+usgs_water_temp_min_7days,usgs_conductivity_mean_14days,0.15
+vct_target_bloom_intensity_7days,usgs_water_temp_min_7days,0.15
+vct_target_bloom_intensity_7days,usgs_water_temp_max_14days,0.15
+vct_target_bloom_intensity,noaa_wind_speed_5_min,-0.15
+vct_target_bloom_intensity,noaa_wind_speed_mean,-0.15
+usgs_water_temp_mean_14days,noaa_snow_depth,-0.15
+noaa_wind_speed_mean,noaa_precipitation,0.15
+usgs_conductivity_max_14days,noaa_precipitation,0.15
+vct_target_bloom_intensity_14days,noaa_wind_speed_2_min,-0.15
+noaa_wind_speed_5_min,noaa_air_temp_mean,-0.15
+vct_water_surface_14days,noaa_air_temp_mean,-0.15
+vct_target_bloom_intensity_7days,usgs_water_temp_mean_7days,0.15
+usgs_conductivity_mean_7days,noaa_wind_direction_2_min,-0.15
+noaa_wind_speed_5_min,noaa_snowfall,0.15
+vct_water_temp_14days,vct_water_surface_14days,-0.15
+usgs_water_temp_mean_14days,dec_chlorophyll-a,0.15
+noaa_wind_speed_2_min,noaa_air_temp_mean,-0.14
+noaa_wind_speed_mean,noaa_air_temp_mean,-0.14
+vct_target_bloom_intensity_14days,noaa_wind_speed_mean,-0.14
+usgs_water_temp_mean_7days,usgs_conductivity_mean_14days,0.14
+noaa_wind_speed_2_min,noaa_snowfall,0.14
+usgs_conductivity_max_14days,noaa_wind_speed_5_min,0.14
+vct_water_temp_7days,noaa_wind_speed_2_min,-0.14
+usgs_water_temp_min_14days,noaa_snow_depth,-0.14
+usgs_conductivity_mean_7days,noaa_wind_direction_5_min,-0.14
+vct_water_temp_14days,dec_total phosphorus,0.14
+vct_water_temp_14days,vct_target_bloom_intensity_14days,0.14
+vct_water_temp_7days,noaa_snowfall,-0.14
+vct_water_surface_7days,dec_chlorophyll-a,-0.14
+vct_water_surface_14days,usgs_water_temp_max_7days,-0.14
+vct_target_bloom_intensity_7days,usgs_water_temp_max_7days,0.14
+usgs_conductivity_min_7days,noaa_air_temp_mean,0.14
+usgs_water_temp_min_14days,dec_total phosphorus,0.14
+vct_water_surface_14days,dec_temperature,-0.14
+usgs_water_temp_max_7days,usgs_conductivity_mean_14days,0.14
+vct_water_temp_7days,vct_target_bloom_intensity_7days,0.14
+usgs_conductivity_mean_7days,noaa_air_temp_max,0.14
+noaa_air_temp_max,dec_secchi depth,-0.13
+noaa_wind_speed_5_min,noaa_snow_depth,0.13
+vct_target_bloom_intensity_14days,noaa_wind_speed_5_min,-0.13
+usgs_conductivity_mean_14days,noaa_wind_direction_5_min,-0.13
+vct_water_surface_14days,vct_longitude,-0.13
+noaa_wind_speed_mean,noaa_wind_direction_2_min,-0.13
+vct_water_temp_14days,dec_secchi depth,-0.13
+vct_water_surface_14days,noaa_air_temp_min,-0.13
+vct_water_surface_14days,vct_target_bloom_intensity,-0.13
+usgs_water_temp_mean_14days,dec_total phosphorus,0.13
+noaa_wind_speed_2_min,noaa_snow_depth,0.13
+vct_water_temp_7days,noaa_snow_depth,-0.13
+usgs_water_temp_max_14days,dec_chlorophyll-a,0.13
+usgs_water_temp_min_7days,dec_total phosphorus,0.13
+noaa_wind_speed_mean,dec_chlorophyll-a,-0.13
+usgs_water_temp_max_14days,dec_total phosphorus,0.13
+usgs_water_temp_min_7days,dec_chlorophyll-a,0.13
+vct_water_surface_7days,noaa_air_temp_max,-0.13
+vct_water_surface_14days,usgs_water_temp_mean_7days,-0.12
+usgs_conductivity_min_7days,dec_secchi depth,0.12
+usgs_conductivity_min_14days,dec_secchi depth,0.12
+usgs_conductivity_mean_14days,noaa_air_temp_mean,0.12
+usgs_water_temp_mean_7days,dec_total phosphorus,0.12
+vct_water_temp_14days,noaa_snowfall,-0.12
+noaa_wind_speed_2_min,dec_chlorophyll-a,-0.12
+noaa_air_temp_mean,dec_secchi depth,-0.12
+vct_water_temp_14days,noaa_wind_speed_5_min,-0.12
+usgs_water_temp_max_7days,dec_secchi depth,-0.12
+vct_water_surface_7days,vct_target_bloom_intensity,-0.12
+usgs_conductivity_max_7days,noaa_precipitation,0.12
+usgs_water_temp_max_7days,dec_total phosphorus,0.12
+noaa_wind_speed_5_min,dec_chlorophyll-a,-0.12
+vct_water_temp_7days,vct_water_surface_7days,-0.12
+usgs_conductivity_min_14days,noaa_air_temp_mean,0.12
+vct_water_temp_14days,noaa_snow_depth,-0.12
+usgs_conductivity_mean_14days,noaa_wind_direction_2_min,-0.12
+usgs_conductivity_max_7days,noaa_wind_speed_2_min,0.11
+usgs_water_temp_mean_7days,dec_chlorophyll-a,0.11
+noaa_wind_direction_2_min,noaa_air_temp_min,-0.11
+vct_water_temp_14days,dec_dissolved phosphorus,0.11
+vct_water_surface_14days,usgs_water_temp_max_14days,-0.11
+vct_water_temp_14days,vct_target_bloom_intensity,0.11
+usgs_water_temp_mean_7days,dec_secchi depth,-0.11
+vct_water_surface_7days,vct_longitude,-0.11
+vct_water_surface_7days,noaa_air_temp_mean,-0.11
+vct_target_bloom_intensity_14days,usgs_water_temp_min_14days,0.11
+noaa_precipitation,noaa_air_temp_min,-0.11
+usgs_conductivity_min_7days,noaa_air_temp_max,0.11
+vct_water_temp_14days,usgs_conductivity_min_14days,-0.11
+vct_water_temp_7days,vct_target_bloom_intensity,0.11
+noaa_wind_speed_2_min,noaa_wind_direction_5_min,0.1
+vct_water_surface_7days,usgs_water_temp_max_7days,-0.1
+usgs_water_temp_max_14days,dec_secchi depth,-0.1
+vct_water_surface_14days,vct_latitude,-0.1
+usgs_conductivity_mean_7days,dec_secchi depth,0.1
+vct_water_surface_14days,usgs_water_temp_min_7days,-0.1
+vct_water_temp_14days,noaa_wind_speed_2_min,-0.1
+vct_water_temp_7days,dec_total phosphorus,0.1
+vct_target_bloom_intensity_14days,usgs_water_temp_mean_14days,0.1
+noaa_wind_direction_5_min,dec_secchi depth,-0.1
+vct_target_bloom_intensity,noaa_air_temp_min,0.1
+noaa_wind_direction_5_min,noaa_air_temp_max,0.1
+noaa_wind_speed_mean,dec_secchi depth,0.1
+usgs_conductivity_mean_14days,dec_secchi depth,0.1
+vct_water_temp_7days,dec_secchi depth,-0.1
+vct_water_surface_7days,noaa_air_temp_min,-0.1
+noaa_snowfall,noaa_precipitation,0.1
+vct_water_temp_7days,usgs_conductivity_min_14days,-0.1
+usgs_conductivity_max_14days,dec_total phosphorus,-0.1
+usgs_conductivity_mean_14days,noaa_air_temp_max,0.1
+vct_water_temp_14days,usgs_conductivity_min_7days,-0.1
+usgs_water_temp_max_7days,dec_chlorophyll-a,0.1
+vct_target_bloom_intensity_14days,usgs_water_temp_max_14days,0.1
+usgs_water_temp_mean_14days,dec_secchi depth,-0.09
+usgs_water_temp_min_14days,noaa_wind_direction_2_min,-0.09
+noaa_air_temp_min,dec_secchi depth,-0.09
+vct_target_bloom_intensity,noaa_air_temp_mean,0.09
+vct_target_bloom_intensity_14days,usgs_water_temp_min_7days,0.09
+usgs_water_temp_min_7days,noaa_wind_direction_2_min,-0.09
+usgs_conductivity_max_14days,dec_dissolved phosphorus,-0.09
+usgs_conductivity_max_7days,noaa_wind_speed_5_min,0.09
+vct_water_surface_14days,usgs_water_temp_mean_14days,-0.09
+usgs_conductivity_max_14days,dec_temperature,-0.09
+usgs_conductivity_mean_14days,noaa_precipitation,0.09
+usgs_water_temp_min_7days,dec_secchi depth,-0.09
+vct_water_surface_14days,usgs_conductivity_min_7days,0.09
+noaa_snow_depth,noaa_precipitation,0.09
+usgs_conductivity_min_7days,dec_temperature,0.09
+vct_water_surface_7days,usgs_water_temp_mean_7days,-0.09
+usgs_conductivity_min_14days,dec_temperature,0.09
+vct_water_temp_14days,vct_water_surface_7days,-0.09
+usgs_water_temp_min_14days,dec_dissolved phosphorus,0.09
+vct_water_temp_14days,vct_longitude,0.09
+vct_target_bloom_intensity_14days,usgs_water_temp_mean_7days,0.09
+vct_target_bloom_intensity,noaa_air_temp_max,0.09
+noaa_air_temp_mean,dec_total nitrogen,-0.09
+vct_longitude,usgs_water_temp_max_7days,0.09
+vct_longitude,noaa_air_temp_max,0.09
+vct_water_surface_14days,usgs_conductivity_min_14days,0.09
+vct_water_surface_7days,vct_latitude,-0.09
+vct_longitude,noaa_air_temp_mean,0.09
+vct_water_temp_7days,dec_dissolved phosphorus,0.09
+noaa_precipitation,dec_chlorophyll-a,-0.09
+usgs_conductivity_max_7days,dec_total phosphorus,-0.09
+noaa_air_temp_max,dec_total nitrogen,-0.09
+vct_longitude,noaa_air_temp_min,0.09
+usgs_conductivity_min_14days,noaa_air_temp_max,0.09
+vct_longitude,usgs_water_temp_mean_7days,0.08
+vct_water_surface_7days,dec_temperature,-0.08
+vct_water_temp_7days,vct_target_bloom_intensity_14days,0.08
+noaa_wind_speed_mean,noaa_wind_direction_5_min,-0.08
+usgs_conductivity_max_7days,dec_dissolved phosphorus,-0.08
+vct_longitude,usgs_water_temp_max_14days,0.08
+vct_longitude,usgs_water_temp_min_7days,0.08
+usgs_water_temp_mean_14days,dec_dissolved phosphorus,0.08
+usgs_conductivity_max_7days,noaa_snowfall,-0.08
+vct_target_bloom_intensity_14days,usgs_water_temp_max_7days,0.08
+usgs_conductivity_max_14days,dec_secchi depth,0.08
+vct_water_temp_7days,usgs_conductivity_min_7days,-0.08
+usgs_water_temp_min_14days,usgs_conductivity_max_7days,0.08
+usgs_conductivity_min_7days,dec_total phosphorus,-0.08
+usgs_conductivity_mean_14days,dec_dissolved phosphorus,-0.08
+usgs_conductivity_min_14days,dec_total phosphorus,-0.08
+usgs_conductivity_mean_7days,noaa_precipitation,0.08
+noaa_air_temp_min,dec_total nitrogen,-0.08
+usgs_conductivity_mean_7days,dec_dissolved phosphorus,-0.08
+usgs_conductivity_max_7days,dec_secchi depth,0.08
+noaa_wind_speed_mean,dec_total nitrogen,-0.08
+vct_longitude,usgs_water_temp_mean_14days,0.08
+vct_water_temp_14days,dec_chlorophyll-a,0.08
+vct_water_surface_7days,noaa_wind_direction_5_min,-0.08
+vct_water_surface_7days,usgs_water_temp_max_14days,-0.08
+usgs_water_temp_min_7days,dec_dissolved phosphorus,0.08
+noaa_wind_speed_5_min,noaa_wind_direction_5_min,0.08
+usgs_conductivity_mean_14days,dec_total phosphorus,-0.08
+usgs_water_temp_min_14days,dec_secchi depth,-0.08
+noaa_air_temp_max,dec_total phosphorus,0.08
+usgs_conductivity_max_7days,noaa_snow_depth,-0.08
+vct_water_surface_14days,noaa_wind_direction_5_min,-0.08
+usgs_conductivity_min_7days,dec_dissolved phosphorus,-0.07
+usgs_water_temp_max_14days,dec_dissolved phosphorus,0.07
+noaa_air_temp_mean,dec_total phosphorus,0.07
+vct_longitude,usgs_water_temp_min_14days,0.07
+usgs_conductivity_max_14days,noaa_snowfall,-0.07
+usgs_conductivity_max_14days,dec_total nitrogen,-0.07
+noaa_air_temp_min,dec_total phosphorus,0.07
+noaa_wind_direction_2_min,dec_secchi depth,-0.07
+usgs_conductivity_mean_7days,noaa_snowfall,-0.07
+usgs_water_temp_mean_14days,usgs_conductivity_max_7days,0.07
+vct_target_bloom_intensity_7days,noaa_air_temp_min,0.07
+usgs_conductivity_mean_7days,dec_total phosphorus,-0.07
+usgs_conductivity_min_14days,noaa_wind_speed_5_min,-0.07
+usgs_conductivity_min_7days,dec_total nitrogen,-0.07
+vct_water_surface_7days,usgs_water_temp_min_7days,-0.07
+noaa_snowfall,dec_temperature,-0.07
+noaa_wind_speed_5_min,dec_total nitrogen,-0.07
+vct_latitude,usgs_water_temp_max_7days,0.07
+usgs_conductivity_max_14days,noaa_snow_depth,-0.07
+vct_latitude,usgs_water_temp_mean_7days,0.07
+usgs_conductivity_min_14days,dec_dissolved phosphorus,-0.07
+usgs_water_temp_max_14days,usgs_conductivity_max_7days,0.07
+vct_water_temp_14days,vct_latitude,0.07
+usgs_conductivity_mean_14days,noaa_wind_speed_2_min,0.07
+vct_water_surface_14days,usgs_water_temp_min_14days,-0.07
+vct_latitude,noaa_air_temp_max,0.07
+vct_water_surface_7days,noaa_snowfall,0.07
+usgs_water_temp_mean_7days,dec_dissolved phosphorus,0.07
+vct_water_temp_7days,vct_longitude,0.07
+vct_water_surface_7days,noaa_wind_direction_2_min,-0.07
+vct_latitude,usgs_water_temp_min_7days,0.07
+vct_latitude,noaa_air_temp_mean,0.07
+usgs_conductivity_min_14days,dec_total nitrogen,-0.07
+usgs_conductivity_mean_7days,noaa_snow_depth,-0.07
+vct_water_surface_7days,usgs_conductivity_min_7days,0.07
+vct_latitude,usgs_water_temp_max_14days,0.07
+vct_latitude,noaa_air_temp_min,0.07
+usgs_conductivity_min_14days,noaa_precipitation,-0.07
+vct_water_surface_7days,noaa_snow_depth,0.07
+vct_water_surface_14days,noaa_snowfall,0.07
+usgs_conductivity_min_7days,noaa_precipitation,-0.07
+usgs_conductivity_mean_14days,dec_total nitrogen,-0.07
+noaa_snow_depth,dec_temperature,-0.07
+vct_target_bloom_intensity_7days,noaa_precipitation,-0.07
+usgs_conductivity_mean_7days,dec_total nitrogen,-0.07
+vct_latitude,usgs_water_temp_mean_14days,0.07
+usgs_water_temp_mean_7days,noaa_wind_direction_2_min,-0.06
+usgs_conductivity_max_7days,dec_total nitrogen,-0.06
+noaa_wind_direction_5_min,noaa_air_temp_mean,0.06
+usgs_water_temp_mean_14days,noaa_wind_direction_2_min,-0.06
+vct_water_surface_14days,noaa_snow_depth,0.06
+noaa_wind_speed_2_min,dec_total nitrogen,-0.06
+vct_water_surface_7days,usgs_conductivity_min_14days,0.06
+vct_water_surface_7days,usgs_water_temp_mean_14days,-0.06
+vct_latitude,usgs_water_temp_min_14days,0.06
+vct_target_bloom_intensity_7days,noaa_wind_direction_5_min,-0.06
+vct_target_bloom_intensity,noaa_precipitation,-0.06
+vct_water_temp_7days,usgs_conductivity_max_14days,-0.06
+usgs_conductivity_mean_14days,noaa_snowfall,-0.06
+vct_target_bloom_intensity_7days,noaa_air_temp_mean,0.06
+noaa_wind_direction_2_min,noaa_air_temp_mean,-0.06
+usgs_conductivity_max_7days,noaa_air_temp_min,0.06
+usgs_water_temp_max_7days,dec_dissolved phosphorus,0.06
+usgs_conductivity_mean_7days,dec_temperature,0.06
+vct_target_bloom_intensity_7days,noaa_air_temp_max,0.06
+vct_water_surface_14days,noaa_wind_direction_2_min,-0.06
+usgs_conductivity_mean_14days,noaa_snow_depth,-0.06
+usgs_conductivity_max_7days,noaa_air_temp_mean,0.06
+usgs_conductivity_max_14days,noaa_wind_speed_mean,0.06
+usgs_conductivity_min_7days,noaa_wind_speed_5_min,-0.06
+usgs_water_temp_min_7days,usgs_conductivity_max_7days,0.06
+vct_latitude,usgs_conductivity_max_14days,-0.06
+usgs_conductivity_max_7days,noaa_wind_direction_2_min,-0.05
+noaa_wind_direction_5_min,noaa_precipitation,-0.05
+vct_target_bloom_intensity,usgs_conductivity_max_14days,-0.05
+usgs_water_temp_mean_7days,usgs_conductivity_max_7days,0.05
+usgs_conductivity_max_7days,dec_temperature,-0.05
+vct_water_temp_7days,usgs_conductivity_mean_14days,-0.05
+usgs_conductivity_min_7days,noaa_snowfall,-0.05
+usgs_water_temp_max_7days,usgs_conductivity_max_7days,0.05
+vct_latitude,usgs_conductivity_mean_14days,-0.05
+vct_latitude,usgs_conductivity_min_7days,-0.05
+usgs_conductivity_max_7days,noaa_air_temp_max,0.05
+vct_longitude,usgs_conductivity_max_14days,-0.05
+vct_latitude,usgs_conductivity_mean_7days,-0.05
+usgs_water_temp_max_7days,noaa_wind_direction_2_min,-0.05
+vct_water_temp_7days,vct_latitude,0.05
+usgs_conductivity_min_7days,noaa_snow_depth,-0.05
+vct_latitude,usgs_conductivity_max_7days,-0.05
+noaa_wind_speed_2_min,dec_secchi depth,0.05
+vct_latitude,usgs_conductivity_min_14days,-0.05
+noaa_wind_direction_5_min,noaa_snowfall,-0.05
+noaa_wind_speed_5_min,dec_secchi depth,0.05
+vct_longitude,usgs_conductivity_min_7days,-0.05
+vct_water_surface_14days,usgs_conductivity_mean_7days,0.05
+usgs_conductivity_min_14days,noaa_snowfall,-0.05
+noaa_wind_speed_5_min,noaa_wind_direction_2_min,0.05
+vct_longitude,noaa_wind_speed_2_min,-0.05
+usgs_water_temp_max_14days,noaa_wind_direction_2_min,-0.05
+usgs_conductivity_min_14days,noaa_snow_depth,-0.05
+vct_longitude,usgs_conductivity_min_14days,-0.05
+vct_longitude,usgs_conductivity_mean_14days,-0.05
+vct_longitude,noaa_wind_speed_5_min,-0.05
+vct_water_surface_14days,usgs_conductivity_mean_14days,0.05
+vct_water_temp_7days,noaa_wind_direction_2_min,0.04
+vct_longitude,usgs_conductivity_max_7days,-0.04
+vct_longitude,usgs_conductivity_mean_7days,-0.04
+vct_target_bloom_intensity,usgs_conductivity_max_7days,-0.04
+vct_water_temp_14days,usgs_conductivity_mean_14days,-0.04
+noaa_wind_direction_5_min,noaa_snow_depth,-0.04
+vct_latitude,noaa_wind_speed_2_min,-0.04
+vct_water_surface_7days,usgs_water_temp_min_14days,-0.04
+vct_latitude,noaa_wind_speed_5_min,-0.04
+vct_target_bloom_intensity_7days,usgs_conductivity_max_14days,-0.04
+vct_longitude,noaa_wind_speed_mean,-0.04
+vct_water_surface_7days,noaa_precipitation,0.04
+noaa_wind_direction_2_min,noaa_precipitation,-0.04
+usgs_water_temp_max_7days,dec_total nitrogen,-0.04
+usgs_conductivity_max_7days,noaa_wind_direction_5_min,-0.04
+usgs_conductivity_mean_14days,noaa_wind_speed_5_min,0.04
+noaa_wind_speed_2_min,noaa_wind_direction_2_min,0.04
+vct_water_surface_7days,usgs_conductivity_mean_14days,0.04
+vct_water_temp_14days,noaa_wind_direction_2_min,0.04
+noaa_precipitation,dec_total phosphorus,-0.04
+usgs_conductivity_mean_7days,noaa_wind_speed_2_min,0.04
+vct_target_bloom_intensity_14days,noaa_wind_direction_5_min,-0.04
+usgs_water_temp_max_7days,noaa_wind_direction_5_min,0.04
+vct_water_surface_7days,usgs_conductivity_mean_7days,0.04
+vct_latitude,noaa_wind_speed_mean,-0.04
+usgs_conductivity_min_14days,noaa_wind_speed_2_min,-0.04
+noaa_wind_speed_5_min,dec_total phosphorus,-0.04
+vct_target_bloom_intensity_14days,noaa_wind_direction_2_min,0.04
+vct_water_temp_7days,dec_chlorophyll-a,0.03
+usgs_water_temp_mean_7days,dec_total nitrogen,-0.03
+usgs_water_temp_max_14days,dec_total nitrogen,-0.03
+usgs_water_temp_min_14days,noaa_wind_direction_5_min,-0.03
+vct_water_temp_7days,usgs_conductivity_max_7days,-0.03
+usgs_conductivity_max_14days,dec_chlorophyll-a,-0.03
+vct_target_bloom_intensity_14days,usgs_conductivity_max_14days,-0.03
+usgs_conductivity_max_7days,noaa_wind_speed_mean,0.03
+noaa_precipitation,dec_secchi depth,-0.03
+vct_water_temp_14days,usgs_conductivity_mean_7days,-0.03
+vct_target_bloom_intensity_14days,noaa_precipitation,-0.03
+usgs_water_temp_min_14days,usgs_conductivity_max_14days,0.03
+noaa_wind_speed_2_min,dec_total phosphorus,-0.03
+noaa_wind_speed_mean,dec_total phosphorus,-0.03
+vct_water_surface_7days,usgs_conductivity_max_14days,0.03
+vct_target_bloom_intensity_14days,noaa_air_temp_min,0.03
+vct_target_bloom_intensity,noaa_snowfall,-0.03
+usgs_water_temp_min_7days,dec_total nitrogen,-0.03
+vct_water_temp_7days,dec_total nitrogen,-0.03
+noaa_wind_direction_5_min,dec_temperature,0.03
+noaa_precipitation,dec_total nitrogen,0.03
+vct_water_temp_14days,usgs_conductivity_max_14days,-0.03
+usgs_conductivity_min_14days,noaa_wind_speed_mean,-0.03
+usgs_conductivity_mean_14days,dec_temperature,0.03
+usgs_conductivity_max_7days,dec_chlorophyll-a,-0.03
+vct_target_bloom_intensity,noaa_snow_depth,-0.03
+vct_water_temp_7days,usgs_conductivity_mean_7days,-0.03
+usgs_water_temp_mean_14days,usgs_conductivity_max_14days,0.03
+usgs_water_temp_max_14days,usgs_conductivity_max_14days,0.03
+vct_target_bloom_intensity_14days,noaa_air_temp_max,0.03
+usgs_conductivity_min_7days,noaa_wind_speed_2_min,-0.03
+vct_water_surface_14days,usgs_conductivity_max_14days,0.03
+usgs_conductivity_max_14days,noaa_air_temp_min,0.03
+usgs_water_temp_mean_14days,dec_total nitrogen,-0.03
+vct_target_bloom_intensity_14days,noaa_air_temp_mean,0.03
+vct_target_bloom_intensity_7days,noaa_snowfall,-0.03
+noaa_wind_direction_2_min,noaa_air_temp_max,-0.03
+noaa_precipitation,dec_dissolved phosphorus,0.02
+noaa_air_temp_min,dec_dissolved phosphorus,0.02
+vct_target_bloom_intensity_7days,noaa_snow_depth,-0.02
+usgs_water_temp_max_14days,noaa_wind_direction_5_min,0.02
+vct_water_surface_14days,usgs_conductivity_max_7days,0.02
+vct_target_bloom_intensity,noaa_wind_direction_5_min,-0.02
+vct_water_temp_14days,dec_total nitrogen,-0.02
+vct_water_surface_7days,usgs_conductivity_max_7days,0.02
+usgs_conductivity_max_14days,noaa_wind_direction_5_min,-0.02
+vct_target_bloom_intensity_7days,usgs_conductivity_max_7days,-0.02
+usgs_conductivity_mean_7days,dec_chlorophyll-a,-0.02
+noaa_snow_depth,dec_dissolved phosphorus,0.02
+noaa_air_temp_mean,dec_chlorophyll-a,-0.02
+noaa_wind_direction_2_min,dec_chlorophyll-a,0.02
+usgs_water_temp_min_14days,dec_total nitrogen,-0.02
+noaa_snowfall,dec_dissolved phosphorus,0.02
+noaa_air_temp_max,dec_dissolved phosphorus,0.02
+usgs_conductivity_max_14days,noaa_air_temp_mean,0.02
+noaa_wind_direction_2_min,noaa_snowfall,0.02
+noaa_air_temp_mean,dec_dissolved phosphorus,0.02
+noaa_wind_direction_5_min,dec_total phosphorus,0.02
+vct_target_bloom_intensity_14days,noaa_snowfall,-0.02
+noaa_wind_speed_5_min,dec_dissolved phosphorus,-0.02
+usgs_water_temp_mean_7days,noaa_wind_direction_5_min,0.02
+usgs_conductivity_mean_14days,dec_chlorophyll-a,-0.02
+vct_target_bloom_intensity_14days,noaa_snow_depth,-0.02
+noaa_wind_direction_5_min,dec_total nitrogen,0.02
+noaa_snow_depth,dec_total phosphorus,0.02
+vct_target_bloom_intensity_14days,usgs_conductivity_max_7days,-0.02
+noaa_air_temp_min,dec_chlorophyll-a,-0.02
+vct_target_bloom_intensity,noaa_wind_direction_2_min,0.02
+noaa_snowfall,dec_total phosphorus,0.01
+noaa_wind_direction_2_min,noaa_snow_depth,0.01
+vct_target_bloom_intensity,usgs_conductivity_mean_14days,-0.01
+noaa_wind_direction_5_min,dec_chlorophyll-a,0.01
+noaa_air_temp_max,dec_chlorophyll-a,-0.01
+usgs_conductivity_max_14days,noaa_air_temp_max,0.01
+vct_water_surface_14days,noaa_precipitation,0.01
+usgs_conductivity_mean_7days,noaa_wind_speed_5_min,0.01
+noaa_snow_depth,dec_total nitrogen,0.01
+vct_water_temp_14days,usgs_conductivity_max_7days,-0.01
+noaa_snowfall,dec_total nitrogen,0.01
+noaa_wind_direction_2_min,dec_temperature,-0.01
+usgs_water_temp_min_7days,noaa_wind_direction_5_min,-0.01
+usgs_conductivity_min_7days,noaa_wind_speed_mean,-0.01
+noaa_snow_depth,dec_secchi depth,-0.01
+vct_longitude,noaa_snowfall,-0.01
+noaa_wind_direction_2_min,dec_total phosphorus,-0.01
+vct_target_bloom_intensity_7days,usgs_conductivity_mean_7days,0.01
+vct_longitude,noaa_snow_depth,-0.01
+noaa_snow_depth,dec_chlorophyll-a,0.01
+noaa_wind_speed_mean,dec_dissolved phosphorus,-0.01
+vct_target_bloom_intensity_7days,usgs_conductivity_min_7days,0.01
+vct_target_bloom_intensity_7days,usgs_conductivity_min_14days,0.01
+noaa_wind_speed_2_min,dec_dissolved phosphorus,-0.01
+usgs_water_temp_max_7days,usgs_conductivity_max_14days,0.01
+usgs_conductivity_min_7days,dec_chlorophyll-a,-0.01
+vct_target_bloom_intensity,usgs_conductivity_mean_7days,-0.01
+vct_longitude,noaa_wind_direction_5_min,0.01
+vct_target_bloom_intensity_7days,noaa_wind_direction_2_min,0.01
+noaa_snowfall,dec_chlorophyll-a,0.01
+vct_longitude,noaa_wind_direction_2_min,0.01
+usgs_conductivity_mean_7days,noaa_wind_speed_mean,-0.01
+usgs_water_temp_mean_7days,usgs_conductivity_max_14days,0.01
+noaa_wind_direction_2_min,dec_total nitrogen,-0.01
+usgs_conductivity_min_14days,dec_chlorophyll-a,0.01
+usgs_water_temp_min_7days,usgs_conductivity_max_14days,0.01
+noaa_wind_direction_5_min,dec_dissolved phosphorus,-0.01
+vct_target_bloom_intensity_14days,usgs_conductivity_mean_14days,-0.0
+vct_target_bloom_intensity_14days,usgs_conductivity_min_14days,0.0
+usgs_conductivity_max_14days,noaa_wind_direction_2_min,-0.0
+noaa_wind_direction_5_min,noaa_air_temp_min,0.0
+vct_target_bloom_intensity_14days,usgs_conductivity_min_7days,0.0
+dec_total nitrogen,dec_temperature,-0.0
+vct_target_bloom_intensity,usgs_conductivity_min_14days,0.0
+vct_latitude,noaa_wind_direction_5_min,0.0
+usgs_conductivity_mean_14days,noaa_wind_speed_mean,0.0
+noaa_snowfall,dec_secchi depth,-0.0
+vct_latitude,noaa_wind_direction_2_min,0.0
+vct_latitude,noaa_snowfall,-0.0
+vct_longitude,noaa_precipitation,-0.0
+vct_target_bloom_intensity,usgs_conductivity_min_7days,-0.0
+noaa_wind_direction_2_min,dec_dissolved phosphorus,0.0
+vct_latitude,noaa_snow_depth,-0.0
+vct_target_bloom_intensity_14days,usgs_conductivity_mean_7days,0.0
+vct_target_bloom_intensity_7days,usgs_conductivity_mean_14days,-0.0
+vct_latitude,noaa_precipitation,-0.0
+usgs_water_temp_mean_14days,noaa_wind_direction_5_min,-0.0
