@@ -65,37 +65,24 @@ During exploratory data analysis, the following sources were used:
 
 1. Data was downloaded from the links in the Data section, saved as zipfiles and loaded into the
    `data/raw_files directory`
-2. The raw files were aggregated into unified csvs using the following:
-```shell
-python scripts/combine_dec_yearly_reports.py \
-    -i data/raw_files/vt_dec_yearly_reports.zip \
-    -o data/unified_csvs/vt_dec.csv
-
-python scripts/combine_vct_yearly_reports.py \
-    -i data/raw_files/vct_yearly_reports.zip \
-    -o data/unified_csvs/vct.csv
-
-notebooks/vtab_combine_vct_data_files.jpynb
-
-notebooks/vtab_usgs_nwis_data_pull.jpynb
+2. The python environment was created by running the script:
+```bash
+sh start_env.sh
 ```
-3. The target dataset was created using the following:
+3. The raw files were aggregated into unified csvs using the following:
 ```shell
-python scripts/create_vct_targets.py \
-    -o data/unified_csvs/targets.csv
+python scripts/preprocessing/data_prep/create_combined_datasets.py
 ```
-3. The unified csv files were converted into usable feature datasets using the following:
+4. The target and feature datasets were created using the following:
 ```shell
-python scripts/create_dec_features.py \
-    -o data/unified_csvs/vt_dec_unified_prepped.csv
-    
-
+python scripts/preprocessing/feature_target_creation/create_targets.py
+python scripts/preprocessing/feature_target_creation/create_dec_features.py
+python scripts/preprocessing/feature_target_creation/create_noaa_features.py
+python scripts/preprocessing/feature_target_creation/create_usgs_features.py
+python scripts/preprocessing/feature_target_creation/create_vct_features.py
 ```
-4. The unified csv files were joined into a single merged feature/target file using the following:
-```shell
-notebooks/vtab_big_data_join.jpynb
-```
-5. Exploratory data analysis was done on the merged feature/target file using the following:
-```shell
-notebooks/vtab_big_data_join_eda.jpynb
-```
+5. Machine learning models were executed using the following:
+   a. Random Forest (with feature pruning)
+    ```shell
+    python scripts/models/random_forest.py
+    ```

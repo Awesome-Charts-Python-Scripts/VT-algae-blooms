@@ -1,31 +1,26 @@
-"""Transform VT Department of Environmental Conservation features so there is one row per target and save to a CSV.
+"""Create VT Department of Environmental Conservation feature dataset.
 
-Transformations occur by averaging all feature measurements from the prior 7 day window for each target observation
-and aligning on nearest location. The nearest feature location to each target observation is determined using a
-euclidean distance. Because the target observations lat/lons change slightly between site readings, an average
-lat/lon per site was used.
+Transformations occur by averaging all feature measurements over a window and aligning on nearest target location.
+The nearest feature site to each target observation was determined through visual observation by plotting target
+region and DEC site locations on a map. If multiple DEC site locations are deemed suitable, the missing values
+are filled using the next closest suitable site.
 
 Usage:
-    python scripts/create_dec_features.py \
-        -o data/unified_csvs/dec_features.csv
+    python scripts/preprocessing/feature_target_creation/create_dec_features.py
 """
 
 import os
 import json
-import argparse
 import pandas as pd
 from typing import Optional, List
 import numpy as np
 
+from utilities import data_paths
 from utilities.preprocessing_helpers import create_lagged_features
 
-# Input data file paths
-FEATURE_CSV_PATH = "data/unified_csvs/vt_dec.csv"
-VCT_TO_DEC_SITE_MAPPING_PATH = "data/data_dictionaries/VCT_to_DEC_site_mappings.json"
-
-# Lookback window to use for aggregating features when pairing with the target observation dates
-LAG_WINDOW_SIZE = 14
+# Lag window to use for aggregating features
 LAG_DAYS = 1
+LAG_WINDOW_SIZE = 14
 
 # Feature columns to store in the final report. These were manually selected according to their feature
 # importance and availability of observations.
@@ -42,7 +37,7 @@ FEATURE_COLUMNS_OF_INTEREST = [
 def create_dec_features(
     features_to_use: List[str] = FEATURE_COLUMNS_OF_INTEREST, dst: Optional[str] = None
 ) -> pd.DataFrame:
-    """Create DEC features per target row through data aggregations.
+    """Create DEC features by aggregating data over a lag window.
 
     Raw features are stored as rows of single test results across all tests and monitoring sites. To convert
     these into usable features, these must be pivoted so that each test is its own column. The test results
@@ -54,8 +49,8 @@ def create_dec_features(
     Returns:
         Feature dataframe
     """
-    raw_feature_df = _get_dec_features(FEATURE_CSV_PATH)
-    with open(VCT_TO_DEC_SITE_MAPPING_PATH, "r") as f:
+    raw_feature_df = _load_raw_dec_data()
+    with open(data_paths.VCT_TO_DEC_SITE_MAPPING_PATH, "r") as f:
         vct_to_dec_site_mapping = json.load(f)
 
     # The feature dataframe has a row per measurement and we need a row per station and measurement date
@@ -70,6 +65,8 @@ def create_dec_features(
 
     region_feature_dfs = []
     for region_map in vct_to_dec_site_mapping:
+        # In some cases there are multiple DEC sites that map to a single VCT region.
+        # We will iteratively fill this dataframe ad do coalesce null entries with the nearest matching site.
         feature_df_for_target_site = pd.DataFrame(
             index=pd.DatetimeIndex(name="date", data=[]), columns=features_to_use
         )
@@ -78,10 +75,12 @@ def create_dec_features(
             feature_rows_for_target_site = pivoted_feature_df[
                 pivoted_feature_df["station"] == matching_dec_site
             ].set_index("date")
+            # Union the dates across all matching DEC sites for the VCT region
             full_index = sorted(
                 set(feature_df_for_target_site.index)
                 | set(feature_rows_for_target_site.index)
             )
+            # Fill any missing dates in the unioned set
             feature_df_for_target_site = feature_df_for_target_site.reindex(
                 full_index
             ).fillna(feature_rows_for_target_site)
@@ -92,6 +91,10 @@ def create_dec_features(
         )
 
     feature_df = pd.concat(region_feature_dfs)
+    # If multiple observations are made on a given date, aggregate them to the daily level sp
+    # as not to overweight individual days.
+    feature_df = feature_df.groupby(["date", "region"]).agg("mean").reset_index()
+    # Lag the features over the window
     agg_functions = {col: "mean" for col in FEATURE_COLUMNS_OF_INTEREST}
     feature_df = create_lagged_features(
         feature_df, "date", "region", LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
@@ -106,32 +109,17 @@ def create_dec_features(
     return feature_df
 
 
-def _get_targets(src: str) -> pd.DataFrame:
-    target_df = pd.read_csv(src)
-    target_df["vct_report_date"] = pd.to_datetime(
-        target_df["vct_report_date"], format="%Y-%m-%d"
-    ).dt.date
-    return target_df[["vct_region", "vct_report_date"]]
-
-
-def _get_dec_features(src):
-    feature_df = pd.read_csv(src)
-    feature_df.columns = [c.lower() for c in feature_df.columns]
-    feature_df["date"] = pd.to_datetime(feature_df["date"], format="%m-%d-%Y")
+def _load_raw_dec_data():
+    dec_df = pd.read_csv(data_paths.DEC_UNIFIED_PATH)
+    dec_df.columns = [c.lower() for c in dec_df.columns]
+    dec_df["date"] = pd.to_datetime(dec_df["date"], format="%m-%d-%Y")
     # Drop the first 5 characters of the station name which are the numeric code
-    feature_df["station"] = feature_df["station"].str[5:]
-    return feature_df
+    dec_df["station"] = dec_df["station"].str[5:]
+    return dec_df
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Generate a CSV of VT DEC features to correspond 1-to-1 with our targets."
-    )
-    parser.add_argument(
-        "-o", action="store", default="out.csv", help="Output file name"
-    )
-    args = parser.parse_args()
-    create_dec_features(dst=args.o)
+    create_dec_features(FEATURE_COLUMNS_OF_INTEREST, data_paths.DEC_FEATURES_PATH)
 
 
 if __name__ == "__main__":
