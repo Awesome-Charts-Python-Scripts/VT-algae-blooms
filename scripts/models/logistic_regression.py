@@ -13,10 +13,12 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 
+from utilities.preprocessing_helpers import get_joined_features_and_targets
+
 merged_data = "data/merged_csvs/algae_merged.csv"
 
 # Load CSV
-df = pd.read_csv(merged_data)
+df = get_joined_features_and_targets()
 
 # Train/test split
 df["vct_report_date"] = pd.to_datetime(df["vct_report_date"])
@@ -33,24 +35,18 @@ test = df[
 
 # Feature columns
 feature_cols = [
-    "vct_water_temp_7days",
-    "vct_water_surface_7days",
-    "vct_anabaena_7days",
-    "vct_aphanizomenon_7days",
-    "vct_microcystin_7days",
-    "vct_oscillatoria_7days",
-    "vct_water_temp_14days",
-    "vct_water_surface_14days",
-    "vct_anabaena_14days",
-    "vct_aphanizomenon_14days",
-    "vct_microcystin_14days",
-    "vct_oscillatoria_14days",
-    "usgs_water_temp_max_trailing",
-    "usgs_water_temp_min_trailing",
-    "usgs_water_temp_mean_trailing",
-    "usgs_conductivity_max_trailing",
-    "usgs_conductivity_min_trailing",
-    "usgs_conductivity_mean_trailing",
+    "vct_water_temp",
+    "vct_water_surface",
+    "vct_anabaena",
+    "vct_aphanizomenon",
+    "vct_microcystin",
+    "vct_oscillatoria",
+    "usgs_water_temp_max",
+    "usgs_water_temp_min",
+    "usgs_water_temp_mean",
+    "usgs_conductivity_max",
+    "usgs_conductivity_min",
+    "usgs_conductivity_mean",
     "noaa_precipitation",
     "noaa_air_temp_max",
     "noaa_air_temp_min",
@@ -70,13 +66,6 @@ feature_cols = [
     "dec_temperature"
 ]
 
-# categorical_cols = ["vct_water_surface_trailing"]
-
-# numeric_cols = [
-#     c for c in feature_cols
-#     if c not in categorical_cols
-# ]
-
 # Fill in missing numeric values with median
 # Scale data
 numeric_transformer = Pipeline([
@@ -84,22 +73,9 @@ numeric_transformer = Pipeline([
     ("scaler", StandardScaler())
 ])
 
-# Fill in missing categorical values with most frequent value
-# One Hot Encoding
-# categorical_transformer = Pipeline([
-#     ("imputer", SimpleImputer(strategy="most_frequent")),
-#     ("onehot", OneHotEncoder(handle_unknown="ignore"))
-# ])
-
-#Preprocessor
-preprocessor = ColumnTransformer([
-    ("num", numeric_transformer, feature_cols),
-    # ("cat", categorical_transformer, categorical_cols)
-])
-
 # Pipeline
 pipeline = Pipeline([
-    ("preprocess", preprocessor),
+    ("preprocess", numeric_transformer),
     ("model", LogisticRegression(max_iter=1000))
 ])
 
@@ -127,5 +103,7 @@ for year in years:
 
     scores.append(score)
 
-print("CV AUC:", np.mean(scores))
-# CV AUC: 0.6719222679761537
+print(np.round(scores,4))
+print("CV AUC:", np.round(np.mean(scores), 4))
+# [0.8072 0.7237 0.6207 0.6931 0.5943 0.5605]
+# CV AUC: 0.6666
