@@ -14,7 +14,7 @@ from utilities.preprocessing_helpers import load_vct_dataset, create_lagged_feat
 
 # Lag window to use for aggregating features
 LAG_DAYS = 1
-LAG_WINDOW_SIZE = 14
+LAG_WINDOW_SIZE = 7
 
 
 def create_vct_features(dst: Optional[str] = None) -> pd.DataFrame:
@@ -80,6 +80,10 @@ def create_vct_features(dst: Optional[str] = None) -> pd.DataFrame:
     vct_df = create_lagged_features(
         vct_df, "report_date", "region", LAG_DAYS, LAG_WINDOW_SIZE, aggregation_methods
     )
+    vct_df["day_of_year"] = (
+        vct_df["report_date"]
+        - vct_df["report_date"].dt.to_period("Y").dt.to_timestamp()
+    ).dt.days
     vct_df.columns = [f"vct_{col}" for col in vct_df.columns]
     if dst is not None:  # Optionally save the results to disk
         vct_df.to_csv(dst, index=False)

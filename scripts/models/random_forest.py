@@ -2,6 +2,7 @@
 
 Recommended most important features are:
 [
+    'vct_day_of_year',
     'vct_water_surface',
     'usgs_conductivity_mean',
     'noaa_precipitation',
@@ -16,7 +17,6 @@ Recommended most important features are:
     'dec_temperature'
 ]
 
-
 Usage:
     python scripts/models/random_forest.py
 """
@@ -28,10 +28,12 @@ from typing import List
 
 from utilities.preprocessing_helpers import get_joined_features_and_targets
 
+TARGET = "vct_target_bloom"
 TEST_SPLIT_DATE = date(2021, 1, 1)
 
 # Comment out features that are highly correlated with other features
 DEFAULT_FEATURE_LIST = [
+    "vct_day_of_year",
     #  "vct_latitude",
     #  "vct_longitude",
     #  "vct_water_temp",
@@ -63,8 +65,6 @@ DEFAULT_FEATURE_LIST = [
     "dec_chlorophyll-a",
     "dec_secchi depth",
     "dec_temperature",
-    # "vct_target_bloom_intensity",
-    # "vct_target_bloom_intensity_num",
 ]
 
 
@@ -81,14 +81,14 @@ def create_model(dst: str):
     Returns:
         Feature dataframe
     """
-    X, y = _get_features_and_targets("vct_target_bloom", DEFAULT_FEATURE_LIST)
+    X, y = _get_features_and_targets(TARGET, DEFAULT_FEATURE_LIST)
     X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
     groups = [dt.year for dt in y_train.index.get_level_values(0)]
     results = _run_cross_validation(X_train, y_train, groups)
     print(f"Model performance without feature selection: {results['test_score']}")
 
     important_features = _get_important_features(X_train, y_train, groups)
-    X, y = _get_features_and_targets("vct_target_bloom", important_features)
+    X, y = _get_features_and_targets(TARGET, important_features)
     X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
     results = _run_cross_validation(X_train, y_train, groups)
     print(f"Model performance with feature selection: {results['test_score']}")
@@ -108,7 +108,7 @@ def _get_features_and_targets(target: str, feature_list: List[str]):
         .sort_index()
     )
     X = df.drop(columns=target)
-    y = df[target]
+    y = df[target].astype(str)
     return X, y
 
 
@@ -138,11 +138,7 @@ def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):
         )
         X_train = X.iloc[train]
         y_train = y.iloc[train]
-        X_test = X.iloc[test]
-        y_test = y.iloc[test]
         rfc.fit(X_train, y_train)
-        y_pred = rfc.predict(X_test)
-        score = sklearn.metrics.accuracy_score(y_test, y_pred)
         for feature, importance in zip(X_train.columns, rfc.feature_importances_):
             if importance < threshold:
                 continue

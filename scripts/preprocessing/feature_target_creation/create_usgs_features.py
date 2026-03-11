@@ -15,7 +15,7 @@ from utilities.preprocessing_helpers import create_lagged_features
 
 # Lag window to use for aggregating features
 LAG_DAYS = 1
-LAG_WINDOW_SIZE = 14
+LAG_WINDOW_SIZE = 7
 
 # Feature columns to store in the final report. These were manually selected according to their feature
 # importance and availability of observations.

@@ -15,7 +15,7 @@ from utilities.preprocessing_helpers import create_lagged_features
 
 # Lag window to use for aggregating features
 LAG_DAYS = 1
-LAG_WINDOW_SIZE = 14
+LAG_WINDOW_SIZE = 7
 
 
 def create_noaa_features(dst: Optional[str] = None) -> pd.DataFrame:
