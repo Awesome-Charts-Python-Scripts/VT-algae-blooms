@@ -82,7 +82,11 @@ python scripts/preprocessing/feature_target_creation/create_usgs_features.py
 python scripts/preprocessing/feature_target_creation/create_vct_features.py
 ```
 5. Machine learning models were executed using the following:
-   a. Random Forest (with feature pruning)
-    ```shell
-    python scripts/models/random_forest.py
-    ```
+- a. Random Forest (with feature pruning)
+```shell
+python scripts/models/random_forest.py
+```
+- b. Logistic Regression
+```shell
+python scripts/models/logistic_regression.py
+```

@@ -7,11 +7,14 @@ import pandas as pd
 import numpy as np
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score
-from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+from sklearn.model_selection import LeaveOneGroupOut, cross_validate
+from sklearn.model_selection import cross_val_predict
+from sklearn.metrics import roc_auc_score, roc_curve
+from sklearn.metrics import precision_recall_curve, average_precision_score
+import matplotlib.pyplot as plt
 
 from utilities.preprocessing_helpers import get_joined_features_and_targets
 
@@ -79,31 +82,72 @@ pipeline = Pipeline([
     ("model", LogisticRegression(max_iter=1000))
 ])
 
-# Cross-validation
-years = sorted(train["vct_report_date"].dt.year.unique())
+# Cross validation (Leave one year out per fold)
+years = train["vct_report_date"].dt.year
 
-scores = []
+X_train = train[feature_cols]
+y_train = train["vct_target_bloom"]
 
-for year in years:
+leave_one_out = LeaveOneGroupOut()
 
-    train_fold = train[train["vct_report_date"].dt.year != year]
-    val_fold   = train[train["vct_report_date"].dt.year == year]
+cv_results = cross_validate(
+    pipeline,
+    X_train,
+    y_train,
+    groups=years,
+    cv=leave_one_out,
+    scoring=["roc_auc", "accuracy", "precision", "recall", "f1"],
+    return_train_score=False
+)
 
-    X_train = train_fold[feature_cols]
-    y_train = train_fold["vct_target_bloom"]
+# Scores for each cross-validation fold:
+for metric, values in cv_results.items():
+    if metric.startswith("test_"):
+        print(metric, values.mean().round(4), values.round(4))
 
-    X_val = val_fold[feature_cols]
-    y_val = val_fold["vct_target_bloom"]
+# test_roc_auc 0.6806 [0.8306 0.698  0.663  0.7317 0.5866 0.5737]
+# test_accuracy 0.7793 [0.8006 0.8117 0.7939 0.8012 0.7012 0.767 ]
+# test_precision 0.5198 [0.5357 0.5082 0.575  0.7917 0.3333 0.375 ]
+# test_recall 0.2525 [0.4    0.5254 0.2875 0.2405 0.0242 0.0375]
+# test_f1 0.3067 [0.458  0.5167 0.3833 0.3689 0.0451 0.0682]
 
-    pipeline.fit(X_train, y_train)
+# Plot ROC Curve
+y_out_of_fold_prob = cross_val_predict(
+    pipeline,
+    X_train,
+    y_train,
+    groups=years,
+    cv=leave_one_out,
+    method="predict_proba"
+)[:, 1]
 
-    preds = pipeline.predict_proba(X_val)[:,1]
+cv_auc = roc_auc_score(y_train, y_out_of_fold_prob)
+fpr, tpr, _ = roc_curve(y_train, y_out_of_fold_prob)
 
-    score = roc_auc_score(y_val, preds)
+plt.figure(figsize=(6, 6))
+plt.plot(fpr, tpr, label=f"ROC (AUC = {cv_auc:.3f})")
+plt.plot([0, 1], [0, 1], linestyle="--")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("Logistic Regression ROC Curve (Out-of-Fold)")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.savefig("figures/logistic_regression_roc_curve.png", dpi=300, bbox_inches="tight")
+plt.show()
 
-    scores.append(score)
+# Plot Precision-Recall Curve
+precision, recall, _ = precision_recall_curve(y_train, y_out_of_fold_prob)
 
-print(np.round(scores,4))
-print("CV AUC:", np.round(np.mean(scores), 4))
-# [0.8072 0.7237 0.6207 0.6931 0.5943 0.5605]
-# CV AUC: 0.6666
+ap = average_precision_score(y_train, y_out_of_fold_prob)
+
+plt.figure(figsize=(6,6))
+plt.plot(recall, precision, label=f"AP = {ap:.3f}")
+
+plt.xlabel("Recall")
+plt.ylabel("Precision")
+plt.title("Logistic Regression Precision–Recall Curve")
+plt.legend()
+plt.grid(True)
+
+plt.savefig("figures/logistic_regression_pr_curve.png", dpi=300, bbox_inches="tight")
+plt.show()
