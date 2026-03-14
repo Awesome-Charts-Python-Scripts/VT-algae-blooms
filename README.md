@@ -2,10 +2,15 @@
 CS 5540 class project to use machine learning techniques to predict algae blooms in Vermont
 
 ## Setup
+For Mac/Linux:
 ```bash
 sh start_env.sh
 ```
 
+For Windows:
+```
+./start_env.bat
+```
 
 ### Team
 
