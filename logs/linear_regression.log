@@ -1,0 +1,51 @@
+Running linear regression
+
+Feature columns:
+['vct_anabaena_7days', 'vct_aphanizomenon_7days', 'vct_microcystin_7days', 'vct_oscillatoria_7days', 'vct_water_temp_7days', 'dec_chlorophyll-a', 'dec_total nitrogen', 'dec_total phosphorus', 'noaa_wind_direction_2_min', 'vct_day_of_year']
+
+Training data set shapes:
+X_train_features_df shape: (2127, 10)
+y_lr_train_bloom shape: (2127,)
+y_lr_train_intensity shape: (2127,)
+lr_train_theta shape: (10, 1)
+
+Test data set shapes:
+X_test_features_df shape: (787, 10)
+y_lr_test_bloom shape: (787,)
+y_lr_test_intensity shape: (787,)
+lr_test_theta shape: (10, 1)
+
+Training data set columns with NaNs:
+vct_water_temp_7days-63 NaNs
+dec_chlorophyll-a-148 NaNs
+dec_total nitrogen-151 NaNs
+dec_total phosphorus-151 NaNs
+
+Test data set columns with NaNs:
+vct_water_temp_7days-58 NaNs
+dec_chlorophyll-a-104 NaNs
+dec_total nitrogen-95 NaNs
+dec_total phosphorus-95 NaNs
+
+Cross-validation scores for bloom presence model:
+test_r2 0.0711 [0.1246 0.1251 0.0834 0.065  0.0105 0.0178]
+test_neg_mean_squared_error 0.1647 [0.1456 0.1355 0.1587 0.1713 0.2045 0.1725]
+test_neg_mean_absolute_error 0.3403 [0.3289 0.3134 0.3435 0.3487 0.3767 0.3304]
+
+R2 scores after fitting bloom presence model:
+Training R2: 0.07804563619394933
+Test R2: 0.03870205431023255
+
+Cross-validation scores for bloom intensity model:
+test_r2 0.1239 [0.1558 0.2099 0.1104 0.1156 0.0794 0.0723]
+test_neg_mean_squared_error 0.2289 [0.2768 0.2045 0.2555 0.2619 0.2097 0.1649]
+test_neg_mean_absolute_error 0.3532 [0.3862 0.3252 0.3858 0.373  0.3476 0.3017]
+
+R2 scores after fitting bloom presence model:
+Training R2: 0.13561495398157242
+Test R2: 0.1022922537554678
+
+Bloom intensity model performance:
+R²   : 0.102
+RMSE : 0.467
+MAE  : 0.338
