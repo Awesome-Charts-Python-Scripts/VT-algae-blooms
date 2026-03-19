@@ -95,3 +95,7 @@ python scripts/models/random_forest.py
 ```shell
 python scripts/models/logistic_regression.py
 ```
+- c. Linear Regression
+```
+notebooks/vtab_linear_regression_model.py
+```
