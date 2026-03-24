@@ -22,7 +22,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression, Lasso, ElasticNet, ElasticNetCV
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, average_precision_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, average_precision_score, f1_score
 from sklearn.metrics import precision_recall_curve, auc, roc_auc_score, roc_curve
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import confusion_matrix
@@ -340,7 +340,7 @@ cv_results = cross_validate(
     y_lr_train_bloom,
     cv=logo_bloom.split(X_lr_train_features, y_lr_train_bloom, groups=groups),
     scoring=['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error']
-    # scoring=["roc_auc", "accuracy", "precision", "recall", "f1"],
+    # scoring=["roc_auc", "accuracy", "precision", "recall", "f1"]
 )
 
 # Scores for each cross-validation fold:
@@ -381,6 +381,40 @@ y_out_of_fold_scores = cross_val_predict(
     method="predict" # Because I have a regressor, not a classifier
 )
 
+# Calculate classifier metrics using best threshold to maximize F1 score
+
+# Calculate continuous scores
+precision, recall, thresholds = precision_recall_curve(
+    y_lr_train_bloom,
+    y_out_of_fold_scores
+)
+
+# Compute F1 scores
+f1_scores = 2 * (precision * recall) / (precision + recall + 1e-8)
+
+# Find best threshold
+best_idx = np.argmax(f1_scores[:-1])  # exclude last point (no threshold)
+best_threshold = thresholds[best_idx]
+
+log.info(f"\nBest threshold (max F1): {best_threshold:.4f}")
+log.info(f"Best F1 score: {f1_scores[best_idx]:.4f}")
+
+threshold = best_threshold
+y_pred_binary = (y_out_of_fold_scores >= threshold).astype(int)
+
+accuracy = accuracy_score(y_lr_train_bloom, y_pred_binary)
+precision = precision_score(y_lr_train_bloom, y_pred_binary)
+recall = recall_score(y_lr_train_bloom, y_pred_binary)
+f1 = f1_score(y_lr_train_bloom, y_pred_binary)
+
+log.info(f"\nManual classification metrics (threshold={threshold}):")
+log.info(f"Accuracy: {accuracy:.3f}")
+log.info(f"Precision: {precision:.3f}")
+log.info(f"Recall: {recall:.3f}")
+log.info(f"F1: {f1:.3f}")
+
+# Draw curves
+
 cv_auc = roc_auc_score(y_lr_train_bloom, y_out_of_fold_scores)
 fpr, tpr, _ = roc_curve(y_lr_train_bloom, y_out_of_fold_scores)
 
@@ -412,6 +446,18 @@ plt.title("Linear Regression Bloom Presence Precision–Recall Curve")
 plt.legend()
 plt.grid(True)
 
+# Get current limits
+x_min, x_max = plt.xlim()
+y_min, y_max = plt.ylim()
+
+# Compute how far above 1.0 the axis goes
+x_pad = x_max - 1
+y_pad = y_max - 1
+
+# Set symmetric limits
+plt.xlim(-x_pad, 1 + x_pad)
+plt.ylim(-y_pad, 1 + y_pad)
+
 fig_name = "linear_regression_bloom_presence_pr_curve.png"
 fig_path = os.path.join(fig_directory, fig_name)
 plt.savefig(fig_path, dpi=300, bbox_inches="tight")
@@ -419,7 +465,7 @@ plt.savefig(fig_path, dpi=300, bbox_inches="tight")
 plt.close()
 
 # ---------------------------------------------------------------
-# Train bloom presence model with cross-validation
+# Train bloom intensity model with cross-validation
 # ---------------------------------------------------------------
 
 # Set the folds to be the years
@@ -450,6 +496,7 @@ cv_results = cross_validate(
     y_lr_train_intensity,
     cv=logo_intensity.split(X_lr_train_features, y_lr_train_intensity, groups=groups),
     scoring=['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error']
+    # scoring=["roc_auc", "accuracy", "precision", "recall", "f1"]
 )
 
 # Scores for each cross-validation fold:
@@ -458,7 +505,6 @@ for metric, values in cv_results.items():
     if metric.startswith("test_"):
         display_values = -values.round(4) if "neg_" in metric else values.round(4)
         log.info(f"{metric} {display_values.mean().round(4)} {display_values}")
-        # print(metric, values.mean().round(4), values.round(4))
 
 # Fit the model
 pipeline.fit(X_lr_train_features, y_lr_train_intensity)
@@ -491,7 +537,7 @@ lr_intensity_test_r2 = pipeline.score(X_lr_test_features, y_lr_test_intensity)
 log.info(f"Test R2: {lr_intensity_test_r2}")
 
 # ---------------------------------------------------------------
-# Calculate performance metrics for bloom presence model
+# Calculate performance metrics for bloom intensity model
 # ---------------------------------------------------------------
 
 # Generate predictions on the test set
