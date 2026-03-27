@@ -205,6 +205,12 @@ def _generate_precision_recall_curve_plot(y, y_pred):
     plt.title("Random Forest Precision–Recall Curve")
     plt.legend()
     plt.grid(True)
+    x_min, x_max = plt.xlim()
+    y_min, y_max = plt.ylim()
+    x_pad = x_max - 1
+    y_pad = y_max - 1
+    plt.xlim(-x_pad, 1 + x_pad)
+    plt.ylim(-y_pad, 1 + y_pad)
     plt.savefig("figures/random_forest_pr_curve.png", dpi=300, bbox_inches="tight")
 
 
