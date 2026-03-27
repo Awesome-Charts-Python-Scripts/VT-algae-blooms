@@ -23,11 +23,13 @@ Usage:
     python scripts/models/random_forest.py
 """
 
+import numpy as np
 import sklearn
 import argparse
 from pprint import pprint
 from datetime import date
-from typing import List, Dict
+from typing import Tuple, List, Dict
+import matplotlib.pyplot as plt
 
 from utilities.preprocessing_helpers import get_joined_features_and_targets
 
@@ -95,16 +97,21 @@ def create_model(dst: str):
     X, y = _get_features_and_targets(TARGET, DEFAULT_FEATURE_LIST)
     X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
     groups = [dt.year for dt in y_train.index.get_level_values(0)]
-    results = _run_cross_validation(X_train, y_train, groups)
+    metrics, predictions = _run_cross_validation(X_train, y_train, groups)
     print(f"--Model performance without feature selection--")
-    pprint(results, indent=4, sort_dicts=False)
+    pprint(metrics, indent=4, sort_dicts=False)
 
     important_features = _get_important_features(X_train, y_train, groups)
     X, y = _get_features_and_targets(TARGET, important_features)
     X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
-    results = _run_cross_validation(X_train, y_train, groups)
+    metrics, predictions = _run_cross_validation(X_train, y_train, groups)
     print(f"--Model performance with feature selection--")
-    pprint(results, indent=4, sort_dicts=False)
+    pprint(metrics, indent=4, sort_dicts=False)
+
+    if TARGET == "vct_target_bloom":
+        _generate_roc_curve_plot(y_train, predictions[:, 1])
+        _generate_precision_recall_curve_plot(y_train, predictions[:, 1])
+
     print(f"--Recommended features to use--\n{important_features}")
 
 
@@ -132,7 +139,10 @@ def _get_train_test_split(X, y):
     return (X_train, X_test, y_train, y_test)
 
 
-def _run_cross_validation(X, y, groups, scoring=None, n_estimators=1000) -> Dict:
+def _run_cross_validation(
+    X, y, groups, scoring=None, n_estimators=1000
+) -> Tuple[Dict, np.array]:
+    """Run leave one group out cross validation, and return a tuple of the scores and cross validation predictions"""
     if not scoring:
         scoring = (
             DEFAULT_MULTICLASS_SCORING
@@ -144,9 +154,10 @@ def _run_cross_validation(X, y, groups, scoring=None, n_estimators=1000) -> Dict
         n_estimators=n_estimators, max_features="sqrt", random_state=42
     )
     results = sklearn.model_selection.cross_validate(
-        rfc, X, y, cv=logo, groups=groups, scoring=scoring
+        rfc, X, y, cv=logo, groups=groups, scoring=scoring, return_estimator=True
     )
-    metrics = {
+    estimators = results["estimator"]
+    cv_metrics = {
         k.replace("test_", ""): v.round(3).tolist()
         for k, v in results.items()
         if "test_" in k
@@ -156,7 +167,45 @@ def _run_cross_validation(X, y, groups, scoring=None, n_estimators=1000) -> Dict
         for k, v in results.items()
         if "test_" in k
     }
-    return {**metrics, **mean_metrics}
+    metrics = {**cv_metrics, **mean_metrics}
+    group_indices = [
+        [index for index, value in enumerate(groups) if value == grp]
+        for grp in sorted(set(groups))
+    ]
+    cv_predictions = np.concatenate(
+        [
+            rfc.predict_proba(X.iloc[grp])
+            for (rfc, grp) in zip(estimators, group_indices)
+        ]
+    )
+    return metrics, cv_predictions
+
+
+def _generate_roc_curve_plot(y, y_pred):
+    cv_auc = sklearn.metrics.roc_auc_score(y, y_pred)
+    false_positive_rate, true_positive_rate, _ = sklearn.metrics.roc_curve(y, y_pred)
+    plt.figure(figsize=(6, 6))
+    plt.plot(false_positive_rate, true_positive_rate, label=f"ROC (AUC = {cv_auc:.3f})")
+    plt.plot([0, 1], [0, 1], linestyle="--")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("Random Forest ROC Curve (Out-of-Fold)")
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.savefig("figures/random_forest_roc_curve.png", dpi=300, bbox_inches="tight")
+
+
+def _generate_precision_recall_curve_plot(y, y_pred):
+    precision, recall, _ = sklearn.metrics.precision_recall_curve(y, y_pred)
+    average_precision = sklearn.metrics.average_precision_score(y, y_pred)
+    plt.figure(figsize=(6, 6))
+    plt.plot(recall, precision, label=f"Average Precision = {average_precision:.3f}")
+    plt.xlabel("Recall")
+    plt.ylabel("Precision")
+    plt.title("Random Forest Precision–Recall Curve")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig("figures/random_forest_pr_curve.png", dpi=300, bbox_inches="tight")
 
 
 def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):
