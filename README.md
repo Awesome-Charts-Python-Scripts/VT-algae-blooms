@@ -99,3 +99,7 @@ python scripts/models/logistic_regression.py
 ```shell
 python scripts/models/linear_regression.py
 ```
+- d. SVM
+```shell
+python scripts/models/SVTs.py
+```

@@ -27,11 +27,13 @@ from sklearn.metrics import precision_recall_curve, auc, roc_auc_score, roc_curv
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import confusion_matrix
 
+from utilities.data_paths import DATA_DIR
+
 # ---------------------------------------------------------------
 # Set up logging
 # ---------------------------------------------------------------
 
-log_directory = r"..\..\logs"
+log_directory = "logs"
 log_path = os.path.join(log_directory, "linear_regression.log")
 
 # Set up logging to print to terminal and to log file
@@ -52,7 +54,7 @@ log.info(f"Running linear regression\n")
 # ---------------------------------------------------------------
 
 # Source data info
-data_directory = r"..\..\data\merged_csvs"
+data_directory = os.path.join(DATA_DIR, "merged_csvs")
 algae_file = "algae_merged"
 algae_path = os.path.join(data_directory, algae_file + ".csv")
 
@@ -63,7 +65,7 @@ algae_raw_df = pd.read_csv(algae_path)
 # Set figure output directory
 # ---------------------------------------------------------------
 
-fig_directory = r"..\..\figures"
+fig_directory = r"figures"
 
 # ---------------------------------------------------------------
 # Convert columns to floats, integers, and dates as appropriate
@@ -160,7 +162,7 @@ trailing_target_cols = [
     "vct_target_bloom_intensity_14days"
 ]
 
-correlated_cols = ["dec_temperature", 
+correlated_cols = ["dec_temperature",
                    "usgs_water_temp_max_7days", "usgs_water_temp_min_7days",
                    "usgs_water_temp_max_14days", "usgs_water_temp_min_14days",
                    "usgs_conductivity_max_7days", "usgs_conductivity_min_7days",
@@ -172,14 +174,14 @@ correlated_cols = ["dec_temperature",
 
 # Define unhelpful columns based on coefficient testing later on in the notebook (for feature pruning)
 unhelpful_cols = ["noaa_snow_depth", "noaa_snowfall", "noaa_precipitation",
-                  "noaa_wind_speed_2_min", "noaa_wind_speed_5_min", "noaa_wind_speed_mean", 
-                  "noaa_wind_direction_5_min", 
+                  "noaa_wind_speed_2_min", "noaa_wind_speed_5_min", "noaa_wind_speed_mean",
+                  "noaa_wind_direction_5_min",
                   # "noaa_wind_direction_2_min",
-                  "vct_water_surface_7days", 
+                  "vct_water_surface_7days",
                   # "vct_oscillatoria_7days", "vct_aphanizomenon_7days",
                   "usgs_conductivity_mean_7days",
                   # "usgs_water_temp_mean_7days",
-                  "dec_secchi depth", 
+                  "dec_secchi depth",
                   # "dec_total nitrogen"
 ]
 
@@ -209,7 +211,7 @@ lr_test_set = algae_model_df[algae_model_df["vct_year"].isin(test_years)].copy()
 # Training features for bloom presence and bloom intensity models
 # ---------------------------------------------------------------
 
-# Create a dataframe of features 
+# Create a dataframe of features
 # and two series of the target data: bloom presence and bloom intensity
 # and a dataframe for the meta information aligned with features by index
 algae_train_features = lr_train_set[feature_cols].copy()
@@ -220,7 +222,7 @@ algae_train_meta = lr_train_set[meta_cols].copy()
 # Force all feature columns to be numeric
 X_train_features_df = algae_train_features.apply(pd.to_numeric, errors="coerce")
 
-# Convert dataframe into a matrix and targets into vectors 
+# Convert dataframe into a matrix and targets into vectors
 
 X_lr_train_features = X_train_features_df.to_numpy() # converts feature dataframe into an array
 y_lr_train_bloom = np.asarray(algae_train_target_bloom) # converts target series into a vector
@@ -248,7 +250,7 @@ log.info(f"lr_train_theta shape: {lr_train_theta.shape}\n")
 # Test features for bloom presence and bloom intensity models
 # ---------------------------------------------------------------
 
-# Create a dataframe of features 
+# Create a dataframe of features
 # and two series of the target data: bloom presence and bloom intensity
 # and a dataframe for the meta information aligned with features by index
 
@@ -260,7 +262,7 @@ algae_test_meta = lr_test_set[meta_cols].copy()
 # Force all feature columns to be numeric
 X_test_features_df = algae_test_features.apply(pd.to_numeric, errors="coerce")
 
-# Convert dataframe into a matrix and targets into vectors 
+# Convert dataframe into a matrix and targets into vectors
 X_lr_test_features = X_test_features_df.to_numpy() # converts feature dataframe into an array
 y_lr_test_bloom = np.asarray(algae_test_target_bloom) # converts target series into a vector
 y_lr_test_intensity = np.asarray(algae_test_target_intensity) # converts target series into a vector
