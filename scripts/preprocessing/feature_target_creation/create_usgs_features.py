@@ -11,7 +11,10 @@ import pandas as pd
 from typing import Optional
 
 from utilities import data_paths
-from utilities.preprocessing_helpers import create_lagged_features
+from utilities.preprocessing_helpers import (
+    create_lagged_features,
+    interpolate_features,
+)
 
 # Lag window to use for aggregating features
 LAG_DAYS = 1
@@ -29,7 +32,9 @@ FEATURE_COLUMNS_OF_INTEREST = [
 ]
 
 
-def create_usgs_features(dst: Optional[str] = None) -> pd.DataFrame:
+def create_usgs_features(
+    dst: Optional[str] = None, use_lag: bool = True
+) -> pd.DataFrame:
     """Create DEC features by aggregating data over a lag window.
 
     Raw features are stored as rows of single test results across all tests and monitoring sites. To convert
@@ -72,9 +77,12 @@ def create_usgs_features(dst: Optional[str] = None) -> pd.DataFrame:
     agg_functions = {
         col: "mean" for col in usgs_cleancols_df.columns if col != "report_date"
     }
-    feature_df = create_lagged_features(
-        feature_df, "report_date", None, LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
-    )
+    if use_lag:
+        feature_df = create_lagged_features(
+            feature_df, "report_date", None, LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
+        )
+    else:
+        feature_df = interpolate_features(feature_df, "report_date", None)
     feature_df.columns = [f"usgs_{c}" for c in feature_df.columns]
     if dst is not None:  # Optionally save the results to disk
         feature_df.to_csv(dst, index=False)

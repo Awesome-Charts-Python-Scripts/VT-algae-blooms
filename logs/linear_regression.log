@@ -39,7 +39,7 @@ Test R2: 0.03870205431023255
 Best threshold (max F1): 0.2517
 Best F1 score: 0.4811
 
-Manual classification metrics (threshold=0.2517085909280641):
+Manual classification metrics (threshold=0.251708590928064):
 Accuracy: 0.755
 Precision: 0.475
 Recall: 0.487
@@ -55,6 +55,6 @@ Training R2: 0.13561495398157242
 Test R2: 0.1022922537554678
 
 Bloom intensity model performance:
-R²   : 0.102
+RÂ²   : 0.102
 RMSE : 0.467
 MAE  : 0.338

@@ -3,7 +3,7 @@ name = "vt-algae-blooms"
 version = "0.1.0"
 description = "CS5540 class project to use machine learning techniques to predict algae blooms in Vermont"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 authors = [
     {name = "Josh Fishbein", email = "joshua.fishbein@uvm.edu"},
     {name = "Helen Flannery", email = "helen.flannery@uvm.edu"},
@@ -22,6 +22,9 @@ dependencies = [
     "matplotlib",
     "scikit-learn",
     "jupyter",
+    "keras",
+    "tensorflow",
+    "seaborn",
 ]
 
 [build-system]

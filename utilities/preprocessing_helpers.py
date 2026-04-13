@@ -1,11 +1,14 @@
 import pandas as pd
 from datetime import date
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from utilities import data_paths
 
 MIN_DATE = date(2015, 1, 1)
 MAX_DATE = date(2022, 12, 31)
+MONTH_START = 5
+MONTH_END = 12
+TEST_SPLIT_DATE = date(2021, 1, 1)
 
 
 def load_vct_dataset() -> pd.DataFrame:
@@ -82,6 +85,37 @@ def create_lagged_features(
     return pd.concat(all_dfs)[original_cols]
 
 
+def interpolate_features(
+    df: pd.DataFrame,
+    date_col: str,
+    region_col: Optional[str],
+) -> pd.DataFrame:
+    full_index = pd.date_range(MIN_DATE, MAX_DATE, freq="D")
+    if region_col is None:
+        return (
+            df.set_index(date_col)
+            .reindex(full_index)
+            .interpolate(method="nearest")
+            .ffill()
+            .bfill()
+            .reset_index(names=date_col)
+        )
+
+    all_region_dfs = []
+    for region, region_df in df.groupby(region_col):
+        all_region_dfs.append(
+            region_df.set_index(date_col)
+            .reindex(full_index)
+            .drop(columns=[region_col])
+            .astype(float)
+            .interpolate(method="nearest")
+            .ffill()
+            .bfill()
+            .assign(**{region_col: region})
+        )
+    return pd.concat(all_region_dfs).sort_index().reset_index(names=date_col)
+
+
 def get_joined_features_and_targets(
     target_src: str = data_paths.TARGETS_PATH,
     feature_src: List[str] = [
@@ -114,6 +148,15 @@ def get_joined_features_and_targets(
             right_on=feature_merge_cols,
             how="inner",
         ).drop(columns=list(set(feature_merge_cols) - set(target_merge_cols)))
-
     full_df["vct_report_date"] = pd.to_datetime(full_df["vct_report_date"]).dt.date
     return full_df
+
+
+def get_train_test_split(
+    X: pd.DataFrame, y: pd.Series
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    X_train = X[X.index.get_level_values("vct_report_date") < TEST_SPLIT_DATE]
+    X_test = X[X.index.get_level_values("vct_report_date") >= TEST_SPLIT_DATE]
+    y_train = y[y.index.get_level_values("vct_report_date") < TEST_SPLIT_DATE]
+    y_test = y[y.index.get_level_values("vct_report_date") >= TEST_SPLIT_DATE]
+    return X_train, X_test, y_train, y_test
