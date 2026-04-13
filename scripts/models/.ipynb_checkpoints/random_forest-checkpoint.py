@@ -1,6 +1,4 @@
-"""
-Author: Josh Fishbein
-Creates a random forest ensemble model and recommends most important features for a model.
+"""Creates a random forest ensemble model and recommends most important features for a model.
 
 Recommended most important features are:
 [
@@ -23,26 +21,15 @@ Usage:
     python scripts/models/random_forest.py
 """
 
-import numpy as np
 import sklearn
 import argparse
-from pprint import pprint
 from datetime import date
-from typing import Tuple, List, Dict
-import matplotlib.pyplot as plt
+from typing import List
 
-from utilities.preprocessing_helpers import get_joined_features_and_targets, get_train_test_split
+from utilities.preprocessing_helpers import get_joined_features_and_targets
 
 TARGET = "vct_target_bloom"
 TEST_SPLIT_DATE = date(2021, 1, 1)
-DEFAULT_BINARY_CLASSIFIER_SCORING = ["roc_auc", "accuracy", "precision", "recall", "f1"]
-DEFAULT_MULTICLASS_SCORING = [
-    "roc_auc_ovr",
-    "accuracy",
-    "precision_macro",
-    "recall_macro",
-    "f1_macro",
-]
 
 # Comment out features that are highly correlated with other features
 DEFAULT_FEATURE_LIST = [
@@ -95,29 +82,24 @@ def create_model(dst: str):
         Feature dataframe
     """
     X, y = _get_features_and_targets(TARGET, DEFAULT_FEATURE_LIST)
-    X_train, _, y_train, _ = get_train_test_split(X, y)
+    X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
     groups = [dt.year for dt in y_train.index.get_level_values(0)]
-    metrics, predictions = _run_cross_validation(X_train, y_train, groups)
-    print(f"--Model performance without feature selection--")
-    pprint(metrics, indent=4, sort_dicts=False)
+    results = _run_cross_validation(X_train, y_train, groups)
+    print(f"Model performance without feature selection: {results['test_score']}")
 
     important_features = _get_important_features(X_train, y_train, groups)
     X, y = _get_features_and_targets(TARGET, important_features)
     X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
-    metrics, predictions = _run_cross_validation(X_train, y_train, groups)
-    print(f"--Model performance with feature selection--")
-    pprint(metrics, indent=4, sort_dicts=False)
-
-    if TARGET == "vct_target_bloom":
-        _generate_roc_curve_plot(y_train, predictions[:, 1])
-        _generate_precision_recall_curve_plot(y_train, predictions[:, 1])
-
-    print(f"--Recommended features to use--\n{important_features}")
+    results = _run_cross_validation(X_train, y_train, groups)
+    print(f"Model performance with feature selection: {results['test_score']}")
+    print(f"Recommended features to use: {important_features}")
 
 
 def _get_features_and_targets(target: str, feature_list: List[str]):
     df = get_joined_features_and_targets()
-    df["dec_temperature"] = df["dec_temperature"].fillna(df["usgs_water_temp_mean"])
+    df["dec_temperature"] = df["dec_temperature"].fillna(
+        df["usgs_water_temp_mean"]
+    )
     index_cols = ["vct_report_date", "vct_region"]
     df = (
         df[index_cols + feature_list + [target]]
@@ -126,8 +108,7 @@ def _get_features_and_targets(target: str, feature_list: List[str]):
         .sort_index()
     )
     X = df.drop(columns=target)
-    target_dtype = str if df[target].nunique() > 2 else float
-    y = df[target].astype(target_dtype)
+    y = df[target].astype(str)
     return X, y
 
 
@@ -139,79 +120,14 @@ def _get_train_test_split(X, y):
     return (X_train, X_test, y_train, y_test)
 
 
-def _run_cross_validation(
-    X, y, groups, scoring=None, n_estimators=1000
-) -> Tuple[Dict, np.array]:
-    """Run leave one group out cross validation, and return a tuple of the scores and cross validation predictions"""
-    if not scoring:
-        scoring = (
-            DEFAULT_MULTICLASS_SCORING
-            if y.nunique() > 2
-            else DEFAULT_BINARY_CLASSIFIER_SCORING
-        )
+def _run_cross_validation(X, y, groups, n_estimators=1000):
     logo = sklearn.model_selection.LeaveOneGroupOut()
     rfc = sklearn.ensemble.RandomForestClassifier(
         n_estimators=n_estimators, max_features="sqrt", random_state=42
     )
-    results = sklearn.model_selection.cross_validate(
-        rfc, X, y, cv=logo, groups=groups, scoring=scoring, return_estimator=True
-    )
-    estimators = results["estimator"]
-    cv_metrics = {
-        k.replace("test_", ""): v.round(3).tolist()
-        for k, v in results.items()
-        if "test_" in k
-    }
-    mean_metrics = {
-        k.replace("test_", "mean_"): v.mean().round(3)
-        for k, v in results.items()
-        if "test_" in k
-    }
-    metrics = {**cv_metrics, **mean_metrics}
-    group_indices = [
-        [index for index, value in enumerate(groups) if value == grp]
-        for grp in sorted(set(groups))
-    ]
-    cv_predictions = np.concatenate(
-        [
-            rfc.predict_proba(X.iloc[grp])
-            for (rfc, grp) in zip(estimators, group_indices)
-        ]
-    )
-    return metrics, cv_predictions
+    results = sklearn.model_selection.cross_validate(rfc, X, y, cv=logo, groups=groups)
+    return results
 
-
-def _generate_roc_curve_plot(y, y_pred, dst="figures/random_forest_roc_curve.png"):
-    cv_auc = sklearn.metrics.roc_auc_score(y, y_pred)
-    false_positive_rate, true_positive_rate, _ = sklearn.metrics.roc_curve(y, y_pred)
-    plt.figure(figsize=(6, 6))
-    plt.plot(false_positive_rate, true_positive_rate, label=f"ROC (AUC = {cv_auc:.3f})")
-    plt.plot([0, 1], [0, 1], linestyle="--")
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.title("Random Forest ROC Curve (Out-of-Fold)")
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    plt.savefig(dst, dpi=300, bbox_inches="tight")
-
-
-def _generate_precision_recall_curve_plot(y, y_pred, dst="figures/random_forest_pr_curve.png"):
-    precision, recall, _ = sklearn.metrics.precision_recall_curve(y, y_pred)
-    average_precision = sklearn.metrics.average_precision_score(y, y_pred)
-    plt.figure(figsize=(6, 6))
-    plt.plot(recall, precision, label=f"Average Precision = {average_precision:.3f}")
-    plt.xlabel("Recall")
-    plt.ylabel("Precision")
-    plt.title("Random Forest Precision–Recall Curve")
-    plt.legend()
-    plt.grid(True)
-    x_min, x_max = plt.xlim()
-    y_min, y_max = plt.ylim()
-    x_pad = x_max - 1
-    y_pad = y_max - 1
-    plt.xlim(-x_pad, 1 + x_pad)
-    plt.ylim(-y_pad, 1 + y_pad)
-    plt.savefig(dst, dpi=300, bbox_inches="tight")
 
 def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):
     logo = sklearn.model_selection.LeaveOneGroupOut()
