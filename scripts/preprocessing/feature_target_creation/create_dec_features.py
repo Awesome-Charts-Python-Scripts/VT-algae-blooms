@@ -16,7 +16,10 @@ from typing import Optional, List
 import numpy as np
 
 from utilities import data_paths
-from utilities.preprocessing_helpers import create_lagged_features
+from utilities.preprocessing_helpers import (
+    create_lagged_features,
+    interpolate_features,
+)
 
 # Lag window to use for aggregating features
 LAG_DAYS = 1
@@ -35,7 +38,7 @@ FEATURE_COLUMNS_OF_INTEREST = [
 
 
 def create_dec_features(
-    features_to_use: List[str] = FEATURE_COLUMNS_OF_INTEREST, dst: Optional[str] = None
+    features_to_use: List[str] = FEATURE_COLUMNS_OF_INTEREST, use_lag: bool = True, dst: Optional[str] = None
 ) -> pd.DataFrame:
     """Create DEC features by aggregating data over a lag window.
 
@@ -45,6 +48,8 @@ def create_dec_features(
 
     Args:
         features_to_use: only save features included in this list
+        use_lag: when true, lags all features over a window, otherwise interpolates NaNs using nearest time
+            observation for the region
         dst: output file destination. If empty, no output file is saved
     Returns:
         Feature dataframe
@@ -96,9 +101,14 @@ def create_dec_features(
     feature_df = feature_df.groupby(["date", "region"]).agg("mean").reset_index()
     # Lag the features over the window
     agg_functions = {col: "mean" for col in FEATURE_COLUMNS_OF_INTEREST}
-    feature_df = create_lagged_features(
-        feature_df, "date", "region", LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
-    )
+    if use_lag:
+        feature_df = create_lagged_features(
+            feature_df, "date", "region", LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
+        )
+    else:
+        feature_df = interpolate_features(
+            feature_df, "date", "region",
+        )
     feature_df = feature_df[["date", "region", *FEATURE_COLUMNS_OF_INTEREST]]
     feature_df.columns = [f"dec_{c}" for c in feature_df.columns]
     if dst is not None:  # Optionally save the results to disk

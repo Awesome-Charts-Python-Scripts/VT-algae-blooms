@@ -31,7 +31,7 @@ from datetime import date
 from typing import Tuple, List, Dict
 import matplotlib.pyplot as plt
 
-from utilities.preprocessing_helpers import get_joined_features_and_targets
+from utilities.preprocessing_helpers import get_joined_features_and_targets, get_train_test_split
 
 TARGET = "vct_target_bloom"
 TEST_SPLIT_DATE = date(2021, 1, 1)
@@ -95,7 +95,7 @@ def create_model(dst: str):
         Feature dataframe
     """
     X, y = _get_features_and_targets(TARGET, DEFAULT_FEATURE_LIST)
-    X_train, X_test, y_train, y_test = _get_train_test_split(X, y)
+    X_train, _, y_train, _ = get_train_test_split(X, y)
     groups = [dt.year for dt in y_train.index.get_level_values(0)]
     metrics, predictions = _run_cross_validation(X_train, y_train, groups)
     print(f"--Model performance without feature selection--")
@@ -181,7 +181,7 @@ def _run_cross_validation(
     return metrics, cv_predictions
 
 
-def _generate_roc_curve_plot(y, y_pred):
+def _generate_roc_curve_plot(y, y_pred, dst="figures/random_forest_roc_curve.png"):
     cv_auc = sklearn.metrics.roc_auc_score(y, y_pred)
     false_positive_rate, true_positive_rate, _ = sklearn.metrics.roc_curve(y, y_pred)
     plt.figure(figsize=(6, 6))
@@ -192,10 +192,10 @@ def _generate_roc_curve_plot(y, y_pred):
     plt.title("Random Forest ROC Curve (Out-of-Fold)")
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.savefig("figures/random_forest_roc_curve.png", dpi=300, bbox_inches="tight")
+    plt.savefig(dst, dpi=300, bbox_inches="tight")
 
 
-def _generate_precision_recall_curve_plot(y, y_pred):
+def _generate_precision_recall_curve_plot(y, y_pred, dst="figures/random_forest_pr_curve.png"):
     precision, recall, _ = sklearn.metrics.precision_recall_curve(y, y_pred)
     average_precision = sklearn.metrics.average_precision_score(y, y_pred)
     plt.figure(figsize=(6, 6))
@@ -205,7 +205,7 @@ def _generate_precision_recall_curve_plot(y, y_pred):
     plt.title("Random Forest Precision–Recall Curve")
     plt.legend()
     plt.grid(True)
-    plt.savefig("figures/random_forest_pr_curve.png", dpi=300, bbox_inches="tight")
+    plt.savefig(dst, dpi=300, bbox_inches="tight")
 
 
 def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):

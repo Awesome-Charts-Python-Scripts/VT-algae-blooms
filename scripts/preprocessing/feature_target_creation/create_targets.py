@@ -7,13 +7,16 @@ Usage:
 import os
 import pandas as pd
 import numpy as np
-from typing import Union
+from typing import Union, Optional
 
 from utilities import data_paths
-from utilities.preprocessing_helpers import load_vct_dataset
+from utilities.preprocessing_helpers import (
+    load_vct_dataset,
+    interpolate_features
+)
 
 
-def create_vct_targets(dst: str) -> pd.DataFrame:
+def create_vct_targets(dst: Optional[str] = None, use_interpolation: bool = False) -> pd.DataFrame:
     """Create VCT target data containing bloom presence and intensity and write the outputs to csv.
 
     Args:
@@ -39,12 +42,16 @@ def create_vct_targets(dst: str) -> pd.DataFrame:
             "bloom_intensity": "vct_target_bloom_intensity_num",
         }
     )
+    if use_interpolation:
+        target_df = interpolate_features(
+            target_df, "vct_report_date", "vct_region"
+        )
     if dst is not None:
         target_df.to_csv(dst, index=False)
         os.chmod(
             dst, 0o777
         )  # Open up all the file permissions (read/write/execute for all)
-        return target_df
+    return target_df
 
 
 def _encode_bloom_intensity_as_ordinal(bloom_intensity: Union[str, float]) -> float:

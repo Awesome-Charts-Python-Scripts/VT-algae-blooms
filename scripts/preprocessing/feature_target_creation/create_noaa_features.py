@@ -11,14 +11,17 @@ import pandas as pd
 from typing import Optional
 
 from utilities import data_paths
-from utilities.preprocessing_helpers import create_lagged_features
+from utilities.preprocessing_helpers import (
+    create_lagged_features,
+    interpolate_features,
+)
 
 # Lag window to use for aggregating features
 LAG_DAYS = 1
 LAG_WINDOW_SIZE = 7
 
 
-def create_noaa_features(dst: Optional[str] = None) -> pd.DataFrame:
+def create_noaa_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.DataFrame:
     """Create NOAA features by aggregating data over a lag window.
 
     Args:
@@ -101,9 +104,14 @@ def create_noaa_features(dst: Optional[str] = None) -> pd.DataFrame:
     df_numeric = df_numeric.groupby("DATE").agg("mean").reset_index()
     # Lag the features over the window
     agg_functions = {col: "mean" for col in df_numeric.columns if col != "DATE"}
-    feature_df = create_lagged_features(
-        df_numeric, "DATE", None, LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
-    )
+    if use_lag:
+        feature_df = create_lagged_features(
+            df_numeric, "DATE", None, LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
+        )
+    else:
+        feature_df = interpolate_features(
+            df_numeric, "DATE", None
+        )
     feature_df = feature_df.rename(columns=lambda c: f"noaa_{c}")
 
     # Export averages to CSV
