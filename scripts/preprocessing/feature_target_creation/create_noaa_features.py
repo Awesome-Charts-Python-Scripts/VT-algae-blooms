@@ -21,7 +21,9 @@ LAG_DAYS = 1
 LAG_WINDOW_SIZE = 7
 
 
-def create_noaa_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.DataFrame:
+def create_noaa_features(
+    dst: Optional[str] = None, use_lag: bool = True
+) -> pd.DataFrame:
     """Create NOAA features by aggregating data over a lag window.
 
     Args:
@@ -109,9 +111,7 @@ def create_noaa_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.
             df_numeric, "DATE", None, LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
         )
     else:
-        feature_df = interpolate_features(
-            df_numeric, "DATE", None
-        )
+        feature_df = interpolate_features(df_numeric, "DATE", None)
     feature_df = feature_df.rename(columns=lambda c: f"noaa_{c}")
 
     # Export averages to CSV

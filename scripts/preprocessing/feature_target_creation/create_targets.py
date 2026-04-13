@@ -10,13 +10,12 @@ import numpy as np
 from typing import Union, Optional
 
 from utilities import data_paths
-from utilities.preprocessing_helpers import (
-    load_vct_dataset,
-    interpolate_features
-)
+from utilities.preprocessing_helpers import load_vct_dataset, interpolate_features
 
 
-def create_vct_targets(dst: Optional[str] = None, use_interpolation: bool = False) -> pd.DataFrame:
+def create_vct_targets(
+    dst: Optional[str] = None, use_interpolation: bool = False
+) -> pd.DataFrame:
     """Create VCT target data containing bloom presence and intensity and write the outputs to csv.
 
     Args:
@@ -43,9 +42,7 @@ def create_vct_targets(dst: Optional[str] = None, use_interpolation: bool = Fals
         }
     )
     if use_interpolation:
-        target_df = interpolate_features(
-            target_df, "vct_report_date", "vct_region"
-        )
+        target_df = interpolate_features(target_df, "vct_report_date", "vct_region")
     if dst is not None:
         target_df.to_csv(dst, index=False)
         os.chmod(

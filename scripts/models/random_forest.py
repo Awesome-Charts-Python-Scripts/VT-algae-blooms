@@ -31,7 +31,10 @@ from datetime import date
 from typing import Tuple, List, Dict
 import matplotlib.pyplot as plt
 
-from utilities.preprocessing_helpers import get_joined_features_and_targets, get_train_test_split
+from utilities.preprocessing_helpers import (
+    get_joined_features_and_targets,
+    get_train_test_split,
+)
 
 TARGET = "vct_target_bloom"
 TEST_SPLIT_DATE = date(2021, 1, 1)
@@ -195,7 +198,9 @@ def _generate_roc_curve_plot(y, y_pred, dst="figures/random_forest_roc_curve.png
     plt.savefig(dst, dpi=300, bbox_inches="tight")
 
 
-def _generate_precision_recall_curve_plot(y, y_pred, dst="figures/random_forest_pr_curve.png"):
+def _generate_precision_recall_curve_plot(
+    y, y_pred, dst="figures/random_forest_pr_curve.png"
+):
     precision, recall, _ = sklearn.metrics.precision_recall_curve(y, y_pred)
     average_precision = sklearn.metrics.average_precision_score(y, y_pred)
     plt.figure(figsize=(6, 6))
@@ -212,6 +217,7 @@ def _generate_precision_recall_curve_plot(y, y_pred, dst="figures/random_forest_
     plt.xlim(-x_pad, 1 + x_pad)
     plt.ylim(-y_pad, 1 + y_pad)
     plt.savefig(dst, dpi=300, bbox_inches="tight")
+
 
 def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):
     logo = sklearn.model_selection.LeaveOneGroupOut()

@@ -21,7 +21,9 @@ LAG_DAYS = 1
 LAG_WINDOW_SIZE = 7
 
 
-def create_vct_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.DataFrame:
+def create_vct_features(
+    dst: Optional[str] = None, use_lag: bool = True
+) -> pd.DataFrame:
     """Create VCT feature data by lagging data over a window.
 
     Args:
@@ -83,11 +85,18 @@ def create_vct_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.D
     # Lag features over a window
     if use_lag:
         vct_df = create_lagged_features(
-            vct_df, "report_date", "region", LAG_DAYS, LAG_WINDOW_SIZE, aggregation_methods
+            vct_df,
+            "report_date",
+            "region",
+            LAG_DAYS,
+            LAG_WINDOW_SIZE,
+            aggregation_methods,
         )
     else:
         vct_df = interpolate_features(
-            vct_df, "report_date", "region",
+            vct_df,
+            "report_date",
+            "region",
         )
     vct_df["day_of_year"] = (
         vct_df["report_date"]

@@ -27,13 +27,11 @@ df = get_joined_features_and_targets()
 df["vct_report_date"] = pd.to_datetime(df["vct_report_date"])
 
 train = df[
-    (df["vct_report_date"] >= "2015-01-01") &
-    (df["vct_report_date"] <  "2021-01-01")
+    (df["vct_report_date"] >= "2015-01-01") & (df["vct_report_date"] < "2021-01-01")
 ]
 
 test = df[
-    (df["vct_report_date"] >= "2021-01-01") &
-    (df["vct_report_date"] <= "2022-12-31")
+    (df["vct_report_date"] >= "2021-01-01") & (df["vct_report_date"] <= "2022-12-31")
 ]
 
 # Feature columns
@@ -66,21 +64,19 @@ feature_cols = [
     "dec_dissolved phosphorus",
     "dec_chlorophyll-a",
     "dec_secchi depth",
-    "dec_temperature"
+    "dec_temperature",
 ]
 
 # Fill in missing numeric values with median
 # Scale data
-numeric_transformer = Pipeline([
-    ("imputer", SimpleImputer(strategy="median")),
-    ("scaler", StandardScaler())
-])
+numeric_transformer = Pipeline(
+    [("imputer", SimpleImputer(strategy="median")), ("scaler", StandardScaler())]
+)
 
 # Pipeline
-pipeline = Pipeline([
-    ("preprocess", numeric_transformer),
-    ("model", LogisticRegression(max_iter=1000))
-])
+pipeline = Pipeline(
+    [("preprocess", numeric_transformer), ("model", LogisticRegression(max_iter=1000))]
+)
 
 # Cross validation (Leave one year out per fold)
 years = train["vct_report_date"].dt.year
@@ -97,7 +93,7 @@ cv_results = cross_validate(
     groups=years,
     cv=leave_one_out,
     scoring=["roc_auc", "accuracy", "precision", "recall", "f1"],
-    return_train_score=False
+    return_train_score=False,
 )
 
 # Scores for each cross-validation fold:
@@ -113,12 +109,7 @@ for metric, values in cv_results.items():
 
 # Plot ROC Curve
 y_out_of_fold_prob = cross_val_predict(
-    pipeline,
-    X_train,
-    y_train,
-    groups=years,
-    cv=leave_one_out,
-    method="predict_proba"
+    pipeline, X_train, y_train, groups=years, cv=leave_one_out, method="predict_proba"
 )[:, 1]
 
 cv_auc = roc_auc_score(y_train, y_out_of_fold_prob)
@@ -140,7 +131,7 @@ precision, recall, _ = precision_recall_curve(y_train, y_out_of_fold_prob)
 
 ap = average_precision_score(y_train, y_out_of_fold_prob)
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(6, 6))
 plt.plot(recall, precision, label=f"AP = {ap:.3f}")
 
 plt.xlabel("Recall")

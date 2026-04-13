@@ -32,7 +32,9 @@ FEATURE_COLUMNS_OF_INTEREST = [
 ]
 
 
-def create_usgs_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.DataFrame:
+def create_usgs_features(
+    dst: Optional[str] = None, use_lag: bool = True
+) -> pd.DataFrame:
     """Create DEC features by aggregating data over a lag window.
 
     Raw features are stored as rows of single test results across all tests and monitoring sites. To convert
@@ -80,9 +82,7 @@ def create_usgs_features(dst: Optional[str] = None, use_lag: bool = True) -> pd.
             feature_df, "report_date", None, LAG_DAYS, LAG_WINDOW_SIZE, agg_functions
         )
     else:
-        feature_df = interpolate_features(
-            feature_df, "report_date", None
-        )
+        feature_df = interpolate_features(feature_df, "report_date", None)
     feature_df.columns = [f"usgs_{c}" for c in feature_df.columns]
     if dst is not None:  # Optionally save the results to disk
         feature_df.to_csv(dst, index=False)

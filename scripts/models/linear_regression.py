@@ -14,7 +14,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split, StratifiedShuffleSplit
-from sklearn.model_selection import cross_val_score, cross_val_predict, cross_validate, KFold, LeaveOneGroupOut
+from sklearn.model_selection import (
+    cross_val_score,
+    cross_val_predict,
+    cross_validate,
+    KFold,
+    LeaveOneGroupOut,
+)
 
 from sklearn.preprocessing import OneHotEncoder, PolynomialFeatures, StandardScaler
 from sklearn.decomposition import PCA
@@ -22,7 +28,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression, Lasso, ElasticNet, ElasticNetCV
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, average_precision_score, f1_score
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    average_precision_score,
+    f1_score,
+)
 from sklearn.metrics import precision_recall_curve, auc, roc_auc_score, roc_curve
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import confusion_matrix
@@ -40,10 +52,7 @@ log_path = os.path.join(log_directory, "linear_regression.log")
 logging.basicConfig(
     level=logging.INFO,
     format="%(message)s",
-    handlers=[
-        logging.FileHandler(log_path, mode="w"),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler(log_path, mode="w"), logging.StreamHandler()],
 )
 log = logging.getLogger()
 
@@ -90,13 +99,12 @@ integer_cols = [
     "vct_target_bloom_7days",
     "vct_target_bloom_14days",
     "vct_day_of_year",
-    "vct_year"
+    "vct_year",
 ]
 
 # Format date columns
-algae_numcols_df[date_cols] = (
-    algae_numcols_df[date_cols]
-    .apply(pd.to_datetime, errors="coerce")
+algae_numcols_df[date_cols] = algae_numcols_df[date_cols].apply(
+    pd.to_datetime, errors="coerce"
 )
 
 # Format string columns
@@ -104,18 +112,14 @@ algae_numcols_df[string_cols] = algae_numcols_df[string_cols].astype("string")
 
 # Format integer columns (nullable)
 algae_numcols_df[integer_cols] = (
-    algae_numcols_df[integer_cols]
-        .apply(pd.to_numeric, errors="coerce")
-        .astype("Int64")
+    algae_numcols_df[integer_cols].apply(pd.to_numeric, errors="coerce").astype("Int64")
 )
 
 # Format all remaining columns as floats
 float_cols = algae_numcols_df.columns.difference(string_cols + integer_cols + date_cols)
 
 algae_numcols_df[float_cols] = (
-    algae_numcols_df[float_cols]
-        .apply(pd.to_numeric, errors="coerce")
-        .astype(float)
+    algae_numcols_df[float_cols].apply(pd.to_numeric, errors="coerce").astype(float)
 )
 
 # Remove 2014 (only five observations)
@@ -152,42 +156,62 @@ trailing_14day_cols = [
     "vct_water_temp_14days",
     "vct_water_surface_14days",
     "usgs_conductivity_mean_14days",
-    "usgs_water_temp_mean_14days"
+    "usgs_water_temp_mean_14days",
 ]
 
 trailing_target_cols = [
     "vct_target_bloom_7days",
     "vct_target_bloom_14days",
     "vct_target_bloom_intensity_7days",
-    "vct_target_bloom_intensity_14days"
+    "vct_target_bloom_intensity_14days",
 ]
 
-correlated_cols = ["dec_temperature",
-                   "usgs_water_temp_max_7days", "usgs_water_temp_min_7days",
-                   "usgs_water_temp_max_14days", "usgs_water_temp_min_14days",
-                   "usgs_conductivity_max_7days", "usgs_conductivity_min_7days",
-                   "usgs_conductivity_max_14days", "usgs_conductivity_min_14days",
-                   "noaa_air_temp_max", "noaa_air_temp_min", "noaa_air_temp_mean",
-                   "dec_dissolved phosphorus",
-                   "usgs_water_temp_mean_7days"
+correlated_cols = [
+    "dec_temperature",
+    "usgs_water_temp_max_7days",
+    "usgs_water_temp_min_7days",
+    "usgs_water_temp_max_14days",
+    "usgs_water_temp_min_14days",
+    "usgs_conductivity_max_7days",
+    "usgs_conductivity_min_7days",
+    "usgs_conductivity_max_14days",
+    "usgs_conductivity_min_14days",
+    "noaa_air_temp_max",
+    "noaa_air_temp_min",
+    "noaa_air_temp_mean",
+    "dec_dissolved phosphorus",
+    "usgs_water_temp_mean_7days",
 ]
 
 # Define unhelpful columns based on coefficient testing later on in the notebook (for feature pruning)
-unhelpful_cols = ["noaa_snow_depth", "noaa_snowfall", "noaa_precipitation",
-                  "noaa_wind_speed_2_min", "noaa_wind_speed_5_min", "noaa_wind_speed_mean",
-                  "noaa_wind_direction_5_min",
-                  # "noaa_wind_direction_2_min",
-                  "vct_water_surface_7days",
-                  # "vct_oscillatoria_7days", "vct_aphanizomenon_7days",
-                  "usgs_conductivity_mean_7days",
-                  # "usgs_water_temp_mean_7days",
-                  "dec_secchi depth",
-                  # "dec_total nitrogen"
+unhelpful_cols = [
+    "noaa_snow_depth",
+    "noaa_snowfall",
+    "noaa_precipitation",
+    "noaa_wind_speed_2_min",
+    "noaa_wind_speed_5_min",
+    "noaa_wind_speed_mean",
+    "noaa_wind_direction_5_min",
+    # "noaa_wind_direction_2_min",
+    "vct_water_surface_7days",
+    # "vct_oscillatoria_7days", "vct_aphanizomenon_7days",
+    "usgs_conductivity_mean_7days",
+    # "usgs_water_temp_mean_7days",
+    "dec_secchi depth",
+    # "dec_total nitrogen"
 ]
 
 # Include only 7-day trailing cols in features
 # And do not include trailing_target_cols in features yet
-other_cols = algae_model_df.columns.difference(meta_cols + correlated_cols + trailing_7day_cols + trailing_14day_cols + trailing_target_cols + target_cols + exclude_cols)
+other_cols = algae_model_df.columns.difference(
+    meta_cols
+    + correlated_cols
+    + trailing_7day_cols
+    + trailing_14day_cols
+    + trailing_target_cols
+    + target_cols
+    + exclude_cols
+)
 full_feature_cols = trailing_7day_cols + list(other_cols)
 # feature_cols = trailing_7day_cols + list(other_cols)
 feature_cols = [col for col in full_feature_cols if col not in unhelpful_cols]
@@ -224,9 +248,15 @@ X_train_features_df = algae_train_features.apply(pd.to_numeric, errors="coerce")
 
 # Convert dataframe into a matrix and targets into vectors
 
-X_lr_train_features = X_train_features_df.to_numpy() # converts feature dataframe into an array
-y_lr_train_bloom = np.asarray(algae_train_target_bloom) # converts target series into a vector
-y_lr_train_intensity = np.asarray(algae_train_target_intensity) # converts target series into a vector
+X_lr_train_features = (
+    X_train_features_df.to_numpy()
+)  # converts feature dataframe into an array
+y_lr_train_bloom = np.asarray(
+    algae_train_target_bloom
+)  # converts target series into a vector
+y_lr_train_intensity = np.asarray(
+    algae_train_target_intensity
+)  # converts target series into a vector
 
 # Find the number of features
 n_features = X_train_features_df.shape[1]
@@ -263,9 +293,15 @@ algae_test_meta = lr_test_set[meta_cols].copy()
 X_test_features_df = algae_test_features.apply(pd.to_numeric, errors="coerce")
 
 # Convert dataframe into a matrix and targets into vectors
-X_lr_test_features = X_test_features_df.to_numpy() # converts feature dataframe into an array
-y_lr_test_bloom = np.asarray(algae_test_target_bloom) # converts target series into a vector
-y_lr_test_intensity = np.asarray(algae_test_target_intensity) # converts target series into a vector
+X_lr_test_features = (
+    X_test_features_df.to_numpy()
+)  # converts feature dataframe into an array
+y_lr_test_bloom = np.asarray(
+    algae_test_target_bloom
+)  # converts target series into a vector
+y_lr_test_intensity = np.asarray(
+    algae_test_target_intensity
+)  # converts target series into a vector
 
 # Find the number of features
 n_features = X_test_features_df.shape[1]
@@ -294,7 +330,9 @@ for col in train_cols_with_nans:
     log.info(f"{col}-{X_train_features_df[col].isna().sum()} NaNs")
 
 # Fill in NaN columns in the training data with means
-X_train_features_df[train_nan_cols] = X_train_features_df[train_nan_cols].fillna(X_train_features_df[train_nan_cols].mean())
+X_train_features_df[train_nan_cols] = X_train_features_df[train_nan_cols].fillna(
+    X_train_features_df[train_nan_cols].mean()
+)
 
 # Save training means for using in imputing test data
 train_means = X_train_features_df[train_nan_cols].mean()
@@ -308,7 +346,9 @@ for col in test_cols_with_nans:
     log.info(f"{col}-{X_test_features_df[col].isna().sum()} NaNs")
 
 # Fill in NaN columns in the test data with means from the training data
-X_test_features_df[test_nan_cols] = X_test_features_df[test_nan_cols].fillna(train_means)
+X_test_features_df[test_nan_cols] = X_test_features_df[test_nan_cols].fillna(
+    train_means
+)
 
 # ---------------------------------------------------------------
 # Train bloom presence model with cross-validation
@@ -328,12 +368,14 @@ reg_l1_ratio = 0.00005
 
 # Define a pipeline to impute NaNs, scale the data, and define the model within the cross-validation
 # Use ElasticNetCV to handle multiple correlated features better than regular elastic net
-pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="mean")),
-    ("scaler", StandardScaler()),
-    ("pca", PCA(n_components=0.95)),  # keep 95% variance
-    ("model", ElasticNetCV(l1_ratio=reg_l1_ratio, fit_intercept=True))
-])
+pipeline = Pipeline(
+    [
+        ("imputer", SimpleImputer(strategy="mean")),
+        ("scaler", StandardScaler()),
+        ("pca", PCA(n_components=0.95)),  # keep 95% variance
+        ("model", ElasticNetCV(l1_ratio=reg_l1_ratio, fit_intercept=True)),
+    ]
+)
 
 # Do cross-validation one year at a time
 cv_results = cross_validate(
@@ -341,7 +383,7 @@ cv_results = cross_validate(
     X_lr_train_features,
     y_lr_train_bloom,
     cv=logo_bloom.split(X_lr_train_features, y_lr_train_bloom, groups=groups),
-    scoring=['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error']
+    scoring=["r2", "neg_mean_squared_error", "neg_mean_absolute_error"],
     # scoring=["roc_auc", "accuracy", "precision", "recall", "f1"]
 )
 
@@ -380,15 +422,14 @@ y_out_of_fold_scores = cross_val_predict(
     y_lr_train_bloom,
     groups=groups,
     cv=logo_bloom.split(X_lr_train_features, y_lr_train_bloom, groups=groups),
-    method="predict" # Because I have a regressor, not a classifier
+    method="predict",  # Because I have a regressor, not a classifier
 )
 
 # Calculate classifier metrics using best threshold to maximize F1 score
 
 # Calculate continuous scores
 precision, recall, thresholds = precision_recall_curve(
-    y_lr_train_bloom,
-    y_out_of_fold_scores
+    y_lr_train_bloom, y_out_of_fold_scores
 )
 
 # Compute F1 scores
@@ -440,7 +481,7 @@ precision, recall, _ = precision_recall_curve(y_lr_train_bloom, y_out_of_fold_sc
 
 ap = average_precision_score(y_lr_train_bloom, y_out_of_fold_scores)
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(6, 6))
 plt.plot(recall, precision, label=f"Avg Precision Score = {ap:.3f}")
 plt.xlabel("Recall")
 plt.ylabel("Precision")
@@ -484,12 +525,14 @@ logo_intensity = LeaveOneGroupOut()
 # Define a pipeline to impute NaNs, scale the data, and define the model
 # within the cross-validation
 # Use ElasticNetCV to handle multiple correlated features better than regular elastic net
-pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="mean")),
-    ("scaler", StandardScaler()),
-    # ("pca", PCA(n_components=0.95)),  # keep 95% variance
-    ("model", ElasticNetCV(l1_ratio=reg_l1_ratio, fit_intercept=True))
-])
+pipeline = Pipeline(
+    [
+        ("imputer", SimpleImputer(strategy="mean")),
+        ("scaler", StandardScaler()),
+        # ("pca", PCA(n_components=0.95)),  # keep 95% variance
+        ("model", ElasticNetCV(l1_ratio=reg_l1_ratio, fit_intercept=True)),
+    ]
+)
 
 # Do cross-validation one year at a time
 cv_results = cross_validate(
@@ -497,7 +540,7 @@ cv_results = cross_validate(
     X_lr_train_features,
     y_lr_train_intensity,
     cv=logo_intensity.split(X_lr_train_features, y_lr_train_intensity, groups=groups),
-    scoring=['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error']
+    scoring=["r2", "neg_mean_squared_error", "neg_mean_absolute_error"],
     # scoring=["roc_auc", "accuracy", "precision", "recall", "f1"]
 )
 
@@ -517,7 +560,7 @@ X_lr_train_features_df = pd.DataFrame(X_lr_train_features, columns=feature_cols)
 # Now plotting works
 coef = pipeline.named_steps["model"].coef_
 feature_importance = pd.Series(coef, index=X_lr_train_features_df.columns)
-feature_importance.sort_values().plot(kind='barh')
+feature_importance.sort_values().plot(kind="barh")
 plt.title("Linear Regression Bloom Intensity ElasticNet Coefficients")
 
 fig_name = "linear_regression_coefficients.png"

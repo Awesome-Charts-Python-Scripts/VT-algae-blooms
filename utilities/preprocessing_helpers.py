@@ -92,11 +92,27 @@ def interpolate_features(
 ) -> pd.DataFrame:
     full_index = pd.date_range(MIN_DATE, MAX_DATE, freq="D")
     if region_col is None:
-        return df.set_index(date_col).reindex(full_index).interpolate(method="nearest").ffill().bfill().reset_index(names=date_col)
+        return (
+            df.set_index(date_col)
+            .reindex(full_index)
+            .interpolate(method="nearest")
+            .ffill()
+            .bfill()
+            .reset_index(names=date_col)
+        )
 
     all_region_dfs = []
     for region, region_df in df.groupby(region_col):
-        all_region_dfs.append(region_df.set_index(date_col).reindex(full_index).drop(columns=[region_col]).astype(float).interpolate(method="nearest").ffill().bfill().assign(**{region_col: region}))
+        all_region_dfs.append(
+            region_df.set_index(date_col)
+            .reindex(full_index)
+            .drop(columns=[region_col])
+            .astype(float)
+            .interpolate(method="nearest")
+            .ffill()
+            .bfill()
+            .assign(**{region_col: region})
+        )
     return pd.concat(all_region_dfs).sort_index().reset_index(names=date_col)
 
 
@@ -136,7 +152,9 @@ def get_joined_features_and_targets(
     return full_df
 
 
-def get_train_test_split(X: pd.DataFrame, y: pd.Series) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+def get_train_test_split(
+    X: pd.DataFrame, y: pd.Series
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
     X_train = X[X.index.get_level_values("vct_report_date") < TEST_SPLIT_DATE]
     X_test = X[X.index.get_level_values("vct_report_date") >= TEST_SPLIT_DATE]
     y_train = y[y.index.get_level_values("vct_report_date") < TEST_SPLIT_DATE]

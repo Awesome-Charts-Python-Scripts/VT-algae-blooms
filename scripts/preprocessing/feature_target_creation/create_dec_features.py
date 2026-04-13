@@ -38,7 +38,9 @@ FEATURE_COLUMNS_OF_INTEREST = [
 
 
 def create_dec_features(
-    features_to_use: List[str] = FEATURE_COLUMNS_OF_INTEREST, use_lag: bool = True, dst: Optional[str] = None
+    features_to_use: List[str] = FEATURE_COLUMNS_OF_INTEREST,
+    use_lag: bool = True,
+    dst: Optional[str] = None,
 ) -> pd.DataFrame:
     """Create DEC features by aggregating data over a lag window.
 
@@ -107,7 +109,9 @@ def create_dec_features(
         )
     else:
         feature_df = interpolate_features(
-            feature_df, "date", "region",
+            feature_df,
+            "date",
+            "region",
         )
     feature_df = feature_df[["date", "region", *FEATURE_COLUMNS_OF_INTEREST]]
     feature_df.columns = [f"dec_{c}" for c in feature_df.columns]
