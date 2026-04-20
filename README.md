@@ -103,3 +103,12 @@ python scripts/models/linear_regression.py
 ```shell
 python scripts/models/SVTs.py
 ```
+6. Baseline models were executed using the following:
+- a. Baseline 1 (all "no bloom" predictions)
+```shell
+python scripts/baselines/basline1.py
+```
+- b. Baseline 2 (most common bloom status by location and date)
+```shell
+python scripts/baselines/basline2.py
+```
