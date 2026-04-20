@@ -6,7 +6,7 @@ will be predicted for St Albans Bay for the test period. If there are an equal n
 for a given day/location, then no bloom is selected.
 
 Usage:
-    python scripts/baseline/baseline2.py
+    python scripts/baselines/baseline2.py
 """
 
 import sklearn

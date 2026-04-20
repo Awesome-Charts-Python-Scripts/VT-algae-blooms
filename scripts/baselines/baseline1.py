@@ -3,7 +3,7 @@ Author: Josh Fishbein
 Creates a baseline prediction of always false for comparison of accuracy metrics
 
 Usage:
-    python scripts/baseline/baseline1.py
+    python scripts/baselines/baseline1.py
 """
 
 import sklearn
