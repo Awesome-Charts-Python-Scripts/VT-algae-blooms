@@ -14,6 +14,10 @@ from utilities.preprocessing_helpers import (
     get_joined_features_and_targets,
     get_train_test_split,
 )
+from utilities.evaluation_helpers import (
+    generate_precision_recall_curve_plot,
+    generate_roc_curve_plot,
+)
 
 TARGET = "vct_target_bloom"
 
@@ -35,6 +39,19 @@ def create_model():
     }
 
     pprint(metrics, indent=4, sort_dicts=False)
+
+    generate_roc_curve_plot(
+        "Baseline (no bloom)",
+        y_test[TARGET].astype(float),
+        y_pred.astype(float),
+        "figures/baseline1_roc_curve.png",
+    )
+    generate_precision_recall_curve_plot(
+        "Baseline (no bloom)",
+        y_test[TARGET].astype(float),
+        y_pred.astype(float),
+        "figures/baseline1_pr_curve.png",
+    )
 
 
 if __name__ == "__main__":
