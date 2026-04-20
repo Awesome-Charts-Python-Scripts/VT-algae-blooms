@@ -255,7 +255,11 @@ def main():
         description="Generate a random forest model and print performance metrics"
     )
     parser.add_argument(
-        "--predict-test", dest="predict_test", action="store_true", default=False, help="Predict the test set"
+        "--predict-test",
+        dest="predict_test",
+        action="store_true",
+        default=False,
+        help="Predict the test set",
     )
     args = parser.parse_args()
     create_model(predict_test_set=args.predict_test)
