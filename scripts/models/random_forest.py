@@ -87,21 +87,18 @@ DEFAULT_FEATURE_LIST = [
 ]
 
 
-def create_model(dst: str):
-    """Create DEC features per target row through data aggregations.
-
-    Raw features are stored as rows of single test results across all tests and monitoring sites. To convert
-    these into usable features, these must be pivoted so that each test is its own column. The test results
-    must then be aggregated across a window so that they can be correctly paired with target observations.
+def create_model(predict_test_set: bool = False):
+    """Create random forest model
 
     Args:
-        features_to_use: only save features included in this list
-        dst: output file destination. If empty, no output file is saved
-    Returns:
-        Feature dataframe
+        predict_test_set: if provided, runs predictions against the test set. Otherwise, just uses the validation set
     """
     X, y = _get_features_and_targets(TARGET, DEFAULT_FEATURE_LIST)
-    X_train, _, y_train, _ = get_train_test_split(X, y)
+    X_train, X_test, y_train, y_test = get_train_test_split(X, y)
+    if predict_test_set:
+        _predict_test_set(X_train, X_test, y_train, y_test)
+        return
+
     groups = [dt.year for dt in y_train.index.get_level_values(0)]
     metrics, predictions = _run_cross_validation(X_train, y_train, groups)
     print(f"--Model performance without feature selection--")
@@ -197,6 +194,39 @@ def _run_cross_validation(
     return metrics, cv_predictions
 
 
+def _predict_test_set(
+    X_train, X_test, y_train, y_test, n_estimators=1000
+) -> Tuple[Dict, np.array]:
+    rfc = sklearn.ensemble.RandomForestClassifier(
+        n_estimators=n_estimators, max_features="sqrt", random_state=42
+    )
+    rfc.fit(X_train, y_train)
+    y_pred = rfc.predict(X_test)
+    metrics = {
+        "roc_auc": sklearn.metrics.roc_auc_score(y_test.values, y_pred),
+        "accuracy": sklearn.metrics.accuracy_score(y_test.values, y_pred),
+        "precision": sklearn.metrics.precision_score(y_test.values, y_pred),
+        "recall": sklearn.metrics.recall_score(y_test.values, y_pred),
+        "f1": sklearn.metrics.f1_score(y_test.values, y_pred),
+    }
+
+    pprint(metrics, indent=4, sort_dicts=False)
+
+    y_pred_proba = rfc.predict_proba(X_test)
+    generate_roc_curve_plot(
+        "Random Forest",
+        y_test,
+        y_pred_proba[:, 1],
+        "figures/random_forest_roc_curve.png",
+    )
+    generate_precision_recall_curve_plot(
+        "Random Forest",
+        y_test,
+        y_pred_proba[:, 1],
+        "figures/random_forest_pr_curve.png",
+    )
+
+
 def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):
     logo = sklearn.model_selection.LeaveOneGroupOut()
     important_features = {}
@@ -222,13 +252,13 @@ def _get_important_features(X, y, groups, n_estimators=1000, threshold=0.01):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate a CSV of VT DEC features to correspond 1-to-1 with our targets."
+        description="Generate a random forest model and print performance metrics"
     )
     parser.add_argument(
-        "-o", action="store", default="out.csv", help="Output file name"
+        "--predict-test", dest="predict_test", action="store_true", default=False, help="Predict the test set"
     )
     args = parser.parse_args()
-    create_model(dst=args.o)
+    create_model(predict_test_set=args.predict_test)
 
 
 if __name__ == "__main__":
