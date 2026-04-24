@@ -86,10 +86,23 @@ python scripts/preprocessing/feature_target_creation/create_noaa_features.py
 python scripts/preprocessing/feature_target_creation/create_usgs_features.py
 python scripts/preprocessing/feature_target_creation/create_vct_features.py
 ```
-5. Machine learning models were executed using the following:
-- a. Random Forest (with feature pruning)
+5. Baseline models were executed using the following:
+- a. Baseline 1 (all "no bloom" predictions)
+```shell
+python scripts/baselines/baseline_no_bloom.py
+```
+- b. Baseline 2 (most common bloom status by location and date)
+```shell
+python scripts/baselines/baseline_mode_bloom.py
+```
+6. Feature pruning using the random forest classifier was done using the following:
 ```shell
 python scripts/models/random_forest.py
+```
+7. Machine learning models were executed using the following:
+- a. Random Forest (with feature pruning)
+```shell
+python scripts/models/random_forest.py --predict-test
 ```
 - b. Logistic Regression
 ```shell
@@ -102,13 +115,4 @@ python scripts/models/linear_regression.py
 - d. SVM
 ```shell
 python scripts/models/SVTs.py
-```
-6. Baseline models were executed using the following:
-- a. Baseline 1 (all "no bloom" predictions)
-```shell
-python scripts/baselines/baseline1.py
-```
-- b. Baseline 2 (most common bloom status by location and date)
-```shell
-python scripts/baselines/baseline2.py
 ```

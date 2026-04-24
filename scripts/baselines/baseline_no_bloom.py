@@ -3,7 +3,7 @@ Author: Josh Fishbein
 Creates a baseline prediction of always false for comparison of accuracy metrics
 
 Usage:
-    python scripts/baselines/baseline1.py
+    python scripts/baselines/baseline_no_bloom.py
 """
 
 import sklearn
@@ -44,13 +44,13 @@ def create_model():
         "Baseline (no bloom)",
         y_test[TARGET].astype(float),
         y_pred.astype(float),
-        "figures/baseline1_roc_curve.png",
+        "figures/baseline_no_bloom_roc_curve.png",
     )
     generate_precision_recall_curve_plot(
         "Baseline (no bloom)",
         y_test[TARGET].astype(float),
         y_pred.astype(float),
-        "figures/baseline1_pr_curve.png",
+        "figures/baseline_no_bloom_pr_curve.png",
     )
 
 

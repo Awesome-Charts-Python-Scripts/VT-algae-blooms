@@ -6,7 +6,7 @@ will be predicted for St Albans Bay for the test period. If there are an equal n
 for a given day/location, then no bloom is selected.
 
 Usage:
-    python scripts/baselines/baseline2.py
+    python scripts/baselines/baseline_mode_bloom.py
 """
 
 import sklearn
@@ -84,13 +84,13 @@ def create_model():
         "Baseline (mode bloom)",
         y_test[TARGET].astype(float),
         y_pred_proba,
-        "figures/baseline2_roc_curve.png",
+        "figures/baseline_mode_bloom_roc_curve.png",
     )
     generate_precision_recall_curve_plot(
         "Baseline (mode bloom)",
         y_test[TARGET].astype(float),
         y_pred_proba,
-        "figures/baseline2_pr_curve.png",
+        "figures/baseline_mode_bloom_pr_curve.png",
     )
 
 
